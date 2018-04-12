@@ -1,0 +1,43 @@
+#!/usr/bin/expect --
+#exp_internal 1
+set timeout 120
+#Enable scp and one step login.Copies the Cisco config. Diable scp and one step login. 
+set ldir /media/usbdisk/backupdata/routerconfigs
+set router  [lindex $argv 0]
+set bafile $ldir/$router
+spawn ssh -l slb $router
+expect "*password: "
+send "slb\r"
+expect "*>"
+send "enable\r"
+expect "Password: "
+send "slb\r"
+expect "*#"
+send "configure terminal\r"
+expect "*(config)#"
+send "ip scp server enable\r"
+expect "*(config)#"
+send "aaa authorization exec default local\r"
+expect "*(config)#"
+send "exit\r"
+expect "*#"
+send "exit\r"
+expect "*#"
+spawn scp slb@$router:nvram:/startup-config $bafile
+expect "*password: "
+send "slb\r"
+expect "*#"
+spawn ssh -l slb $router
+expect "*password: "
+send "slb\r"
+expect "*#"
+send "configure terminal\r"
+expect "*(config)#"
+send "no ip scp server enable\r"
+expect "*(config)#"
+send "no aaa authorization exec default local\r"
+expect "*(config)#"
+send "exit\r"
+expect "*#"
+send "exit\r"
+
