@@ -1,0 +1,24 @@
+
+
+Show current oncall, change to next in sequence or send a heartbeat:
+
+http://monitor.oslo.eur.slb.com/cgi-bin/main.cgi
+
+
+TROUBLESHOOTING:
+In case of missing heartbeat, check for existing lockfile (see example below):
+
+ssh root@monitor.oslo.eur.slb.com (std. Linux/Unix passwd)
+cat /var/lock/LCK..ttyS0
+1955 gnokii
+
+kill -9 1955
+rm /var/lock/LCK..ttyS0
+
+verify by:
+/WG_ONCALL/heartbeat.sh
+ or 
+http://monitor.oslo.eur.slb.com/cgi-bin/heartbeat.cgi
+
+More info:
+https://wiki.oslo.eur.slb.com/bin/view/InternalIT/MonitoR

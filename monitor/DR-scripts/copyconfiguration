@@ -1,0 +1,11 @@
+<filecontent>
+# My sql application
+/local1/program/mysql
+
+# Java installation
+/local1/program/java
+
+# Some important information
+/local1/readme.txt
+</filecontent>
+

@@ -1,0 +1,7 @@
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc01:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc02:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc03:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc04:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc10:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc11:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc12:

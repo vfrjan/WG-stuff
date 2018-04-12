@@ -1,0 +1,6 @@
+136.254.55.17:suns01:root:init 5:
+136.254.55.26:mzus:root:init 5:
+136.254.55.2:fs1:root:halt -t 3:
+136.254.55.3:fs2:root:halt -t 3:
+136.254.55.5:fs10:root:halt -t 3:
+136.254.55.6:fs11:root:halt -t 3:

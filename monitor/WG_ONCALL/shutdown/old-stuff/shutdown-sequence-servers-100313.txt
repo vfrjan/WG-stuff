@@ -1,0 +1,19 @@
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut-wo-vcenter.sh no0030vsc01:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut-wo-vcenter.sh no0030vsc02:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut-wo-vcenter.sh no0030vsc03:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut-wo-vcenter.sh no0030vsc04:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut-wo-vcenter.sh no0030vsc10:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut-wo-vcenter.sh no0030vsc11:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut-wo-vcenter.sh no0030vsc12:
+136.254.55.21:jade:root:init 5:
+136.254.55.194:sunrayx00:root:init 5:
+136.254.55.11:sunray01:root:init 5:
+136.254.55.13:netsu013:root:init 5:
+136.254.55.14:netsu010:root:init 5:
+136.254.55.15:linmaster1:root:poweroff:
+136.254.55.18:sun15:root:init 5:
+136.254.55.12:osl-bs01:root:poweroff:
+136.254.55.24:www1:root:poweroff:
+136.254.55.75:mfg-proddb:root:poweroff:
+136.254.55.95:srv017osl:Administrator:shutdown -s -t 1:
+136.254.55.96:srv018osl:Administrator:shutdown -s -t 1:

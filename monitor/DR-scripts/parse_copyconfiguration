@@ -1,0 +1,1 @@
+xpath copyconfiguration '/filecontent' | grep -v filecontent | grep -v "^#" > /tmp/jan

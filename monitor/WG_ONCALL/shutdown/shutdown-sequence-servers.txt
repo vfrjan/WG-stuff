@@ -1,0 +1,18 @@
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut.sh no0030vsc01:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut.sh no0030vsc02:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut.sh no0030vsc03:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut.sh no0030vsc04:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut.sh no0030vsc10:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut.sh no0030vsc11:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut.sh no0030vsc12:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut.sh no0030vsc20:
+127.0.0.1:localhost:vi-admin:/ADMIN/vmshut.sh no0030vsc-test:
+136.254.55.15:linmaster1:root:poweroff:
+136.254.55.12:osl-bs01:root:poweroff:
+136.254.55.24:www1:root:poweroff:
+136.254.55.75:mfg-proddb:root:poweroff:
+136.254.56.14:oss01:root:poweroff:
+136.254.55.96:no0030srv018:administrator:shutdown -s -t 1:
+136.254.55.109:no0030srv022:administrator:shutdown -s -t 1:
+136.254.55.111:no0030srv023:administrator:shutdown -s -t 1:
+136.254.55.26:no0030srv033:administrator:shutdown -s -t 1:

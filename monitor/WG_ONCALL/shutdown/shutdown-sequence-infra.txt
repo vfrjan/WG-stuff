@@ -1,0 +1,14 @@
+136.254.55.13:netsu013:root:init 5:
+136.254.55.17:suns01:root:init 5:
+136.254.55.78:lins09:root:poweroff:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc01:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc02:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc03:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc04:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc10:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc11:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc12:
+127.0.0.1:localhost:vi-admin:/ADMIN/esxshut.sh no0030vsc20:
+136.254.55.2:fs1:root:halt -t 5:
+136.254.55.5:fs10:root:halt -t 5:
+136.254.55.6:fs11:root:halt -t 5:

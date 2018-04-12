@@ -1,0 +1,22 @@
+<config>
+<schedule>
+ 
+ weekly
+ 
+</schedule>
+
+<filecontent>
+
+# My sql application
+ <copy directory="local1/program/mysql">
+  <exclude directory="/local1/program/mysql/mysql-5.5.8-linux2.6-x86_64/data"/>
+ </copy>
+
+# Java installation
+ <copy directory="/local1/program/java"/>
+
+# Some important information
+<copy directory="/local1/readme.txt"/>
+
+</filecontent>
+</config>

@@ -1,0 +1,12 @@
+#!/bin/bash
+#set -x
+name=""
+name=$*
+if [ "$name" = "" ];then
+echo "Usage: $0 name, ie $0 Jan Kraakenes"
+exit
+fi
+ldapsearch -x -h ldap.slb.com -b o=slb,c=an "(cn=*$name*)" alias
+
+echo "$?" > ldap_exit
+#exit $?
