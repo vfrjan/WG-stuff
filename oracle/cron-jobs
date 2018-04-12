@@ -1,0 +1,18 @@
+00 5 * * * /export/home/oracle/scp-itchDB >/dev/null 2>&1
+20,50 * * * * /export/home/oracle/localdbcopies/rsync-archive.sh flex >/dev/null 2>&1
+10,40 * * * * /export/home/oracle/localdbcopies/rsync-archive.sh kitr >/dev/null 2>&1
+1,31 * * * * /export/home/oracle/localdbcopies/rsync-archive.sh kitl >/dev/null 2>&1
+17,47 * * * * /export/home/oracle/localdbcopies/rsync-archive.sh hapr >/dev/null 2>&1
+15,45 * * * * /export/home/oracle/localdbcopies/rsync-archive.sh mxir >/dev/null 2>&1
+25,55 * * * * /export/home/oracle/localdbcopies/rsync-archive.sh mxpl >/dev/null 2>&1
+26,56 * * * * /export/home/oracle/localdbcopies/rsync-archive.sh flxpl >/dev/null 2>&1
+27,57 * * * * /export/home/oracle/localdbcopies/rsync-archive.sh nora >/dev/null 2>&1
+59 23 2-31 * * /export/home/oracle/localdbcopies/rsync-rman-all.sh >/tmp/rsync-rman.log 2>&1
+59 17 * * * /export/home/oracle/localdbcopies/rsync-rman-camp2.sh >/tmp/rsync-rman.log 2>&1
+#00 0 * * 2-6 /export/home/oracle/localdbcopies/init-db-copy.sh flex >/tmp/initflex.log 2>&1
+01 0 * * 2-6 /export/home/oracle/localdbcopies/init-db-copy.sh kitr >/tmp/initkitr.log 2>&1
+02 0 * * 2-6 /export/home/oracle/localdbcopies/init-db-copy.sh hapr >/tmp/inithapr.log 2>&1
+03 0 * * 2-6 /export/home/oracle/localdbcopies/init-db-copy.sh kitl >/tmp/initkitl.log 2>&1
+04 0 * * 2-6 /export/home/oracle/localdbcopies/init-db-copy.sh mxpl >/tmp/initmxpl.log 2>&1
+05 0 * * 2-6 /export/home/oracle/localdbcopies/init-db-copy.sh mxir >/tmp/initmxir.log 2>&1
+06 0 * * 2-6 /export/home/oracle/localdbcopies/init-db-copy.sh flxpl >/tmp/initflxpl.log 2>&1

@@ -1,0 +1,4 @@
+cd to_wg
+lcd /mfg_images/DB-backup/VTI
+get *
+quit

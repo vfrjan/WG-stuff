@@ -1,0 +1,7 @@
+startup nomount
+restore controlfile from '/media/usbdisk/backupdata/mxir/rman/ora_df751555492_s410_s1';
+alter database mount;
+restore database;
+recover database;
+sql 'alter database noarchivelog';
+quit

@@ -1,0 +1,18 @@
+old   1: drop table su_sublog_&1
+new   1: drop table su_sublog_camp2
+
+Table dropped.
+
+old   1: create table su_sublog_&1 as (select * from su_sublog@su_&1 where serialno>80000000 and serialno<99999999 and sublog_id>=&2 and sublog_id<=&3 and part_id=&4)
+new   1: create table su_sublog_camp2 as (select * from su_sublog@su_camp2 where serialno>80000000 and serialno<99999999 and sublog_id>=1426063360 and sublog_id<=1442840575 and part_id=2)
+
+Table created.
+
+old   1: update su_sublog_&1 set part_id=2 where serialno>80000000 and serialno<99999999 and sublog_id>=&2 and sublog_id<=&3
+new   1: update su_sublog_camp2 set part_id=2 where serialno>80000000 and serialno<99999999 and sublog_id>=1426063360 and sublog_id<=1442840575
+
+12144 rows updated.
+
+
+Commit complete.
+

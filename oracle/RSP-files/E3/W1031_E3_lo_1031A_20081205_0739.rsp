@@ -1,0 +1,58 @@
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% HEADER DATA
+% USR_VERSION: 1
+% USR_TYPE   : EF
+% USR_GAINTXT: LO
+% USR_GAINNOM: 1E4
+% USR_CDATE  : 05-Dec-2008 07:47:49
+% USR_LOGSN  : W1031 
+% USR_PRESN  : 1031A 
+% USR_COISN  :  
+% USR_PHYSCH : E3 
+% USR_CCONV  : 3.9736E-7 V/c
+% USR_UNITS  : GAIN = Volt/Volt PHASE = Degrees
+% ENG_DATE   : 05-Dec-2008 14:44:05
+% ENG_SWEEP  : D:\Em\work\sweep_Eamp_10Hz_3300s_5hr.txt
+% ENG_DATA   : M:\EM-Data\42 Rework\Downloads\W1031-E3.bin
+% ENG_RSP    : W1031_E3_lo_1031A_20081205_0739.rsp
+% ENG_START  : 05-Dec-2008 07:47:49 (sample #29978)
+% ENG_SITE   : FI
+% ENG_TYPE   : SIO: EF
+% ENG_ADJC   : COUNTCONVERSION: 3.42/2^23   = 4.0770E-7 Volt/count
+% ENG_ADJR   : 10.000000/1000000.000000 = 0.000010 V/V
+% ENG_NCOIL  :  10.0
+% ENG_RSER   : 1000000.0
+% ENG_PCNAME : FJO-5521PC
+% ENG_SRATE  :  62.5000
+% ENG_FIRMW  : 1.17
+% ENG_LOGCH  : 7
+% ENG_REFCH  : 2
+% ENG_TEMP   : 
+% ENG_COMM   : 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% CALIBRATION DATA: FREQ (HZ)  GAIN (V/V)  PHASE (DEG)
+          10      8811.97   -17.59 
+         6.4      8918.14   -11.16 
+           4      8960.76    -6.76 
+         2.5      8981.12    -3.88 
+         1.6       8987.1    -1.98 
+           1      8986.96    -0.36 
+        0.64       8985.9     1.09 
+         0.4      8976.84     2.86 
+        0.25      8947.75     5.27 
+        0.16      8898.82     8.63 
+         0.1      8720.34    13.84 
+       0.064      8373.78    21.22 
+        0.04      7626.12    31.91 
+       0.025      6358.85    44.94 
+       0.016      4849.26    57.33 
+        0.01      3341.46    68.15 
+      0.0064      2231.76    75.60 
+       0.004      1421.82    80.88 
+      0.0025      895.828    84.27 
+      0.0016       575.02    86.31 
+       0.001      360.401    87.65 
+      0.0003      108.075    89.32 
+%
+%
+%

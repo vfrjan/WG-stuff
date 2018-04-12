@@ -1,0 +1,45 @@
+select serialno,part_id,active,batch,datetime from su_sublog@su_fjrd where serialno=90001272 order by datetime;
+insert into su_sublog (sublog_id,serialno,part_id,active,batch,version,datetime,batch_str) select sublog_id,serialno,part_id,active,batch,version,datetime,batch_str from su_sublog@su_fjrd where serialno=90015189;
+select * from su_sublog_consolidated where serialno = (select serialno from su_sublog_consolidated where active = 1) and sublog_id <> (select subloag_id from su_sublog_consolidated where active = 1)
+select sublog_id,serialno from su_sublog_consolidated group by serialno where active=1 having ( count(serialno) > 1 );
+
+select sublog_id,serialno,
+  count(serialno) as NumOccurences
+  from su_sublog_consolidated
+  where active=1
+  group by serialno,sublog_id
+  having ( count(serialno) > 1 );
+
+select serialno,
+  count(serialno) as NumOccurences
+  from su_sublog_consolidated
+  where active=1
+  group by serialno
+  having ( count(serialno) > 1 );
+
+
+#FJRD
+ insert into  su_sublog_consolidated  select * from su_sublog@su_fjrd where serialno>80000000 and serialno<99999999 and sublog_id>=18454937 and sublog_id<=201326591;
+#FLXPL
+insert into  su_sublog_consolidated  select * from su_sublog@su_flxpl_oslo where serialno>80000000 and serialno<99999999 and sublog_id>=1375731712 and sublog_id<=1392508927;
+#MXPL
+insert into  su_sublog_consolidated  select * from sus_sublog@sus_mxpl_oslo where serialno>80000000 and serialno<99999999 and sublog_id>=135894496 and sublog_id<=1375731711;
+
+#CAMP2
+insert into  su_sublog_consolidated  select * from su_sublog@su_camp2_oslo where serialno>80000000 and serialno<99999999 and sublog_id>=1426063360 and sublog_id<=1442840575;
+#incr update FJRD
+insert into  su_sublog_consolidated  select * from su_sublog@su_fjrd where serialno>80000000 and serialno<99999999 and sublog_id>=18454937 and sublog_id<=201326591 and sublog_id not in(
+select sublog_id from su_sublog_consolidated where sublog_id>=18454937
+  and sublog_id<=201326591);
+
+#incr update FLXPL_OSLO
+insert into  su_sublog_consolidated  select * from su_sublog@su_flxpl_oslo where serialno>80000000 and serialno<99999999 and sublog_id>=1375731712 and sublog_id<=1392508927 and sublog_id not in(
+select sublog_id from su_sublog_consolidated where sublog_id>=1375731712 and sublog_id<=1392508927);
+
+incr update MXPL_OSLO
+insert into  su_sublog_consolidated  select * from sus_sublog@sus_mxpl_oslo where serialno>80000000 and serialno<99999999 and sublog_id>=135894496 and sublog_id<=1375731711 and sublog_id not in(
+select sublog_id from su_sublog_consolidated where sublog_id>=135894496 and sublog_id<=1375731711);
+
+#incr update CAMP2_OSLO
+insert into  su_sublog_consolidated  select * from su_sublog@su_camp2_oslo where serialno>80000000 and serialno<99999999 and sublog_id>=1426063360 and sublog_id<=1442840575 and sublog_id not in(
+select sublog_id from su_sublog_consolidated where sublog_id>=1426063360 and sublog_id<=1442840575);

@@ -1,0 +1,2 @@
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT   '/media/usbdisk/backupdata/kitr/rman/ora_df%t_s%s_s%p';
+backup as compressed backupset INCREMENTAL LEVEL 0 DATABASE;

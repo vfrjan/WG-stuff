@@ -1,0 +1,7 @@
+startup nomount
+restore controlfile from '/media/usbdisk/backupdata/nora/rman/ora_df895615309_s3742_s1';
+alter database mount;
+restore database;
+recover database;
+sql 'alter database noarchivelog';
+quit

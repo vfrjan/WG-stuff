@@ -1,0 +1,58 @@
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% HEADER DATA
+% USR_VERSION: 1
+% USR_TYPE   : HF
+% USR_GAINTXT: LO
+% USR_GAINNOM: 5E-1
+% USR_CDATE  : 13-Jan-2009 15:55:34
+% USR_LOGSN  : W1010 
+% USR_PRESN  : 1010B 
+% USR_COISN  : MC0047 
+% USR_PHYSCH : H1 
+% USR_CCONV  : 3.9736E-7 V/c
+% USR_UNITS  : GAIN = Volt/nanoTesla PHASE = Degrees
+% ENG_DATE   : 14-Jan-2009 08:16:31
+% ENG_SWEEP  : D:\EM\work\sweep_SIO_10Hz_3300s_5hr.txt
+% ENG_DATA   : F:\olsvolldata\W1010-H1-0047.bin
+% ENG_RSP    : W1010_H1_1010B_MC0047_20090113_1525.rsp
+% ENG_START  : 13-Jan-2009 15:55:34 (sample #114662)
+% ENG_SITE   : FI
+% ENG_TYPE   : SIO: HF
+% ENG_ADJC   : COUNTCONVERSION: 3.42/2^23   = 4.0770E-7 Volt/count
+% ENG_ADJR   : 4e2*pi*359.4/800.0 *1.0143 = 572.617182 nT/V
+% ENG_NCOIL  : 359.4
+% ENG_RSER   :  800.0
+% ENG_PCNAME : FJO-5451PC
+% ENG_SRATE  :  62.5000
+% ENG_FIRMW  : 1.17
+% ENG_LOGCH  : 5
+% ENG_REFCH  : 2
+% ENG_TEMP   : 4.0;3.4
+% ENG_COMM   : 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% CALIBRATION DATA: FREQ (HZ)  GAIN (V/nT)  PHASE (DEG)
+          10     0.381685   -16.07 
+         6.4      0.38647    -6.54 
+           4     0.385272     2.14 
+         2.5     0.376937    11.12 
+         1.6     0.357639    21.17 
+           1     0.317737    33.96 
+        0.64     0.259533    47.27 
+         0.4     0.189313    60.28 
+        0.25      0.12784    70.30 
+        0.16    0.0845614    77.07 
+         0.1    0.0536986    81.70 
+       0.064    0.0345809    84.49 
+        0.04    0.0216611    86.45 
+       0.025    0.0135579    87.66 
+       0.016   0.00868806    88.40 
+        0.01   0.00543497    88.83 
+      0.0064   0.00348613    89.10 
+       0.004   0.00218466    89.17 
+      0.0025   0.00136931    89.32 
+      0.0016  0.000877756    89.46 
+       0.001  0.000549916    89.41 
+      0.0003  0.000164217    88.88 
+%
+%
+%

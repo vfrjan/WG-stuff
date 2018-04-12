@@ -1,0 +1,454 @@
+
+Export file created by EXPORT:V10.02.01 via direct path
+import done in US7ASCII character set and AL16UTF16 NCHAR character set
+import server uses WE8ISO8859P1 character set (possible charset conversion)
+. importing MSA's objects into MSA
+IMP-00015: following statement failed because the object already exists:
+ "CREATE SEQUENCE "MSA_APPR_STATE_SEQ" MINVALUE 1 MAXVALUE 16777200 INCREMENT"
+ " BY 1 START WITH 1 NOCACHE NOORDER NOCYCLE"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE SEQUENCE "MSA_APPR_MACRO_SEQ" MINVALUE 1 MAXVALUE 16777200 INCREMENT"
+ " BY 1 START WITH 1 NOCACHE NOORDER NOCYCLE"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE SEQUENCE "MSA_SUBSER_ID_SEQ" MINVALUE 1 MAXVALUE 9999999999999999999"
+ "99999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER NOCYCLE"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE SEQUENCE "MSA_SUBLOG_SEQ" MINVALUE 1 MAXVALUE 16777200 INCREMENT BY "
+ "1 START WITH 67905 NOCACHE NOORDER NOCYCLE"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE SEQUENCE "MSA_VERSION_FILE_ID_SEQ" MINVALUE 1 MAXVALUE 99999 INCREME"
+ "NT BY 1 START WITH 1 NOCACHE NOORDER NOCYCLE"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE SEQUENCE "MSA_VERSION_ID_SEQ" MINVALUE 1 MAXVALUE 99999 INCREMENT BY"
+ " 1 START WITH 1 NOCACHE NOORDER NOCYCLE"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE SEQUENCE "MSA_SINGLE_CAL_SEQ" MINVALUE 1 MAXVALUE 999999999999999999"
+ "999999999 INCREMENT BY 1 START WITH 6427 CACHE 20 NOORDER NOCYCLE"
+. . importing table          "MSA_AMARCALIB_PARAM"        384 rows imported
+. . importing table            "MSA_AMARCALIB_RES"      12668 rows imported
+. . importing table        "MSA_AMARTMPOFFS_PARAM"        201 rows imported
+. . importing table          "MSA_AMARTMPOFFS_RES"       3390 rows imported
+. . importing table               "MSA_APPR_EVENT"          0 rows imported
+. . importing table               "MSA_APPR_MACRO"          0 rows imported
+. . importing table                 "MSA_APPR_MSG"          0 rows imported
+. . importing table              "MSA_APPR_REPAIR"          0 rows imported
+. . importing table              "MSA_APPR_SINGLE"          0 rows imported
+. . importing table               "MSA_APPR_STATE"          1 rows imported
+. . importing table             "MSA_BOOTSN_PARAM"        816 rows imported
+. . importing table               "MSA_BOOTSN_RES"      35990 rows imported
+. . importing table                "MSA_CALIBRATE"          0 rows imported
+. . importing table        "MSA_CURRENTTEST_PARAM"        141 rows imported
+. . importing table          "MSA_CURRENTTEST_RES"       1343 rows imported
+. . importing table        "MSA_DMMVOLTAGES_PARAM"        137 rows imported
+. . importing table          "MSA_DMMVOLTAGES_RES"       6685 rows imported
+. . importing table                   "MSA_DRVMSG"          0 rows imported
+. . importing table                    "MSA_EVENT"       1811 rows imported
+. . importing table            "MSA_GAINACC_PARAM"        511 rows imported
+. . importing table              "MSA_GAINACC_RES"      11435 rows imported
+. . importing table           "MSA_HMV1VSPRAM_RES"       7529 rows imported
+. . importing table             "MSA_HMV3V3_PARAM"       1563 rows imported
+. . importing table               "MSA_HMV3V3_RES"      15204 rows imported
+. . importing table             "MSA_HMV3V6_PARAM"        783 rows imported
+. . importing table               "MSA_HMV3V6_RES"      22707 rows imported
+. . importing table           "MSA_HWDETECT_PARAM"        141 rows imported
+. . importing table             "MSA_HWDETECT_RES"       2955 rows imported
+. . importing table          "MSA_ISOLATION_PARAM"        113 rows imported
+. . importing table            "MSA_ISOLATION_RES"       5455 rows imported
+. . importing table            "MSA_LEAKAGE_PARAM"        643 rows imported
+. . importing table              "MSA_LEAKAGE_RES"      19089 rows imported
+. . importing table                    "MSA_MACRO"       1799 rows imported
+. . importing table        "MSA_MFGDATAPROG_PARAM"        138 rows imported
+. . importing table          "MSA_MFGDATAPROG_RES"       6584 rows imported
+. . importing table        "MSA_MFGDATAVERI_PARAM"        794 rows imported
+. . importing table          "MSA_MFGDATAVERI_RES"      69219 rows imported
+. . importing table              "MSA_MULTI_MACRO"      15472 rows imported
+. . importing table             "MSA_MULTI_SINGLE"          0 rows imported
+. . importing table                   "MSA_OPTION"         11 rows imported
+. . importing table          "MSA_POWERDOWN_PARAM"        651 rows imported
+. . importing table            "MSA_POWERDOWN_RES"       1299 rows imported
+. . importing table                "MSA_RMS_PARAM"        790 rows imported
+. . importing table                  "MSA_RMS_RES"       9720 rows imported
+. . importing table                   "MSA_SINGLE"      12880 rows imported
+. . importing table               "MSA_SINGLE_CAL"       4078 rows imported
+. . importing table  "MSA_SINGLE_CAL_COPIED_FLXPL"          0 rows imported
+. . importing table     "MSA_SINGLE_CAL_SAVEPOINT"       2345 rows imported
+. . importing table    "MSA_SINGLE_CAL_STAT_FLXPL"          0 rows imported
+. . importing table          "MSA_SINGLE_CAL_TEST"          0 rows imported
+. . importing table            "MSA_SNICOMM_PARAM"          4 rows imported
+. . importing table              "MSA_SNICOMM_RES"        120 rows imported
+. . importing table           "MSA_SNITRAFO_PARAM"        145 rows imported
+. . importing table             "MSA_SNITRAFO_RES"       5096 rows imported
+. . importing table           "MSA_STEPTEST_PARAM"        639 rows imported
+. . importing table             "MSA_STEPTEST_RES"      12646 rows imported
+. . importing table                   "MSA_SUBLOG"      67900 rows imported
+. . importing table               "MSA_SUBLOG_REF"      15543 rows imported
+. . importing table                "MSA_SUB_FAULT"          0 rows imported
+. . importing table            "MSA_SUB_FAULTDESC"          0 rows imported
+. . importing table            "MSA_SUB_FAULTTYPE"          0 rows imported
+. . importing table                 "MSA_SUB_MAIN"          1 rows imported
+. . importing table             "MSA_SUB_PARTCOMB"          0 rows imported
+. . importing table                  "MSA_SUB_REF"          0 rows imported
+. . importing table                  "MSA_SUB_SER"          0 rows imported
+. . importing table              "MSA_SUB_SUBTYPE"          0 rows imported
+. . importing table                "MSA_SUB_XPART"          4 rows imported
+. . importing table        "MSA_TEMPDBCHECK_PARAM"         92 rows imported
+. . importing table          "MSA_TEMPDBCHECK_RES"       3264 rows imported
+. . importing table                "MSA_THD_PARAM"        811 rows imported
+. . importing table                  "MSA_THD_RES"       7882 rows imported
+. . importing table                  "MSA_VERSION"          0 rows imported
+. . importing table             "MSA_VERSION_FILE"          0 rows imported
+IMP-00015: following statement failed because the object already exists:
+ "CREATE FORCE VIEW "MSA"."MSA_SUB_PART"                             ("PART_I"
+ "D","SUBSER_SEQ","NAME","REF","SIDE","COLOUMN","SUB_VERSION","APPR_SEQ","APP"
+ "R_SEQ_FROM","APPR_SEQ_TO","STATUS") AS "
+ "SELECT"
+ "    PART_ID ,"
+ "    SUBSER_SEQ,"
+ "    NAME ,"
+ "    REF ,"
+ "    SIDE ,"
+ "    COLOUMN ,"
+ "    SUB_VERSION ,"
+ "    APPR_SEQ,"
+ "    APPR_SEQ_FROM,"
+ "    APPR_SEQ_TO,"
+ "    STATUS"
+ "FROM MSA.MSA_SUB_XPART WITH CHECK OPTION CONSTRAINT "MSA_SUB_PART_CO""
+IMP-00015: following statement failed because the object already exists:
+ "CREATE FORCE VIEW "MSA"."MSA_SUBSER"                             ("SUBSER_I"
+ "D","SERIALNO","UUT_ID","PART_ID","FAULTTYPE_ID","SUBSERNO","EXTERN_DATA","S"
+ "UB_VERSION","DATETIME","REPAIR_CYCLE","APPR_STATE_ID","APPR_SEQUENCE","SPAR"
+ "E") AS "
+ "SELECT"
+ "    SUBSER_ID,"
+ "    SERIALNO,"
+ "    UUT_ID,"
+ "    PART_ID,"
+ "    FAULTTYPE_ID,"
+ "    SUBSERNO,"
+ "    EXTERN_DATA,"
+ "    SUB_VERSION,"
+ "    DATETIME,"
+ "    REPAIR_CYCLE,"
+ "    APPR_STATE_ID,"
+ "    APPR_SEQUENCE,"
+ "    SPARE FROM MSA.MSA_SUB_SER WITH CHECK OPTION CONSTRAINT "MSA_SUBSER_CO""
+IMP-00015: following statement failed because the object already exists:
+ "CREATE FORCE VIEW "MSA"."MSA_VERSION_VIEW"                             ("UU"
+ "T_REVISION","FILETYPE","VERSION_ID","FILEID","DEFAULTSET","FILENAME_ORG","F"
+ "ILENAME_GEN","FILESIZE","FILE_REVISION","DATETIME","VERSION_TIMESTAMP","FIL"
+ "E_TIMESTAMP") AS "
+ "SELECT"
+ "        MSA.MSA_VERSION.UUT_REVISION,"
+ "        MSA.MSA_VERSION.FILETYPE,"
+ "        MSA.MSA_VERSION.VERSION_ID,"
+ "        MSA.MSA_VERSION.FILEID,"
+ "        MSA.MSA_VERSION.DEFAULTSET,"
+ "        MSA.MSA_VERSION_FILE.FILENAME_ORG,"
+ "        MSA.MSA_VERSION_FILE.FILENAME_GEN,"
+ "        MSA.MSA_VERSION_FILE.FILESIZE,"
+ "        MSA.MSA_VERSION_FILE.FILE_REVISION,"
+ "        MSA.MSA_VERSION_FILE.DATETIME,"
+ "        MSA.MSA_VERSION.VERSION_TIMESTAMP,"
+ "        MSA.MSA_VERSION_FILE.FILE_TIMESTAMP"
+ "FROM MSA.MSA_VERSION"
+ "    ,MSA.MSA_VERSION_FILE"
+ "    WHERE MSA.MSA_VERSION.FILEID = MSA.MSA_VERSION_FILE.FILEID"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE PROCEDURE     MSA_SUB_PARTCOMB_SET (in_faulttype_id NUMBER,"
+ "        in_used_in_all_parts NUMBER)"
+ "IS"
+ "   CURSOR part IS SELECT * FROM MSA.MSA_SUB_XPART;"
+ "   lo_faulltype_id       NUMBER;"
+ "BEGIN"
+ "   SELECT count(*) INTO lo_faulltype_id FROM MSA.MSA_SUB_FAULTTYPE WHERE"
+ "            faulttype_id = in_faulttype_id;"
+ "   IF lo_faulltype_id < 1 THEN"
+ "        RAISE_APPLICATION_ERROR(-20000, 'faulttype_id: ' || in_faulttype_id"
+ " || ' does not exists!!');"
+ "   END IF;"
+ "   delete from MSA.MSA_SUB_PARTCOMB where faulttype_id = in_faulttype_id;"
+ "   IF in_used_in_all_parts = 0 THEN"
+ "        FOR partREC IN part LOOP"
+ "            INSERT INTO MSA.MSA_SUB_PARTCOMB VALUES (partREC.part_id, in_fa"
+ "ulttype_id);"
+ "        END LOOP;"
+ "   END IF;"
+ "   COMMIT;"
+ "END;"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE PROCEDURE     MSA_SUB_PARTCOMB_SET_PART (in_part_id NUMBER,"
+ "       in_faulttype_id_from NUMBER,"
+ "       in_faulttype_id_to NUMBER,"
+ "       in_used_in_part NUMBER)"
+ "IS"
+ "   CURSOR faulttype IS SELECT * FROM MSA.MSA_SUB_FAULTTYPE;"
+ "   lo_faulttype_id       NUMBER;"
+ "   lo_part_id       NUMBER;"
+ "BEGIN"
+ "   SELECT count(*) INTO lo_faulttype_id FROM MSA.MSA_SUB_FAULTTYPE WHERE"
+ "            faulttype_id = in_faulttype_id_from;"
+ "   IF lo_faulttype_id < 1 THEN"
+ "        RAISE_APPLICATION_ERROR(-20000, 'faulttype_id: ' || in_faulttype_id"
+ "_from || ' does not exists!!');"
+ "   END IF;"
+ "   SELECT count(*) INTO lo_faulttype_id FROM MSA.MSA_SUB_FAULTTYPE WHERE"
+ "            faulttype_id = in_faulttype_id_to;"
+ "   IF lo_faulttype_id < 1 THEN"
+ "        RAISE_APPLICATION_ERROR(-20000, 'faulttype_id: ' || in_faulttype_id"
+ "_to || ' does not exists!!');"
+ "   END IF;"
+ "   SELECT count(*) INTO lo_part_id FROM MSA.MSA_SUB_XPART WHERE"
+ "            part_id = in_part_id;"
+ "   IF lo_part_id < 1 THEN"
+ "        RAISE_APPLICATION_ERROR(-20000, 'part_id: ' || in_part_id || ' does"
+ " not exists!!');"
+ "   END IF;"
+ "   FOR faulttypeREC IN faulttype LOOP"
+ "        lo_faulttype_id := faulttypeREC.faulttype_id;"
+ "        IF faulttypeREC.faulttype_id <= in_faulttype_id_to AND"
+ "           faulttypeREC.faulttype_id >= in_faulttype_id_from THEN"
+ "            IF in_used_in_part = 1 THEN"
+ "                DELETE FROM MSA.MSA_SUB_PARTCOMB where faulttype_id = fault"
+ "typeREC.faulttype_id"
+ "                        AND part_id = in_part_id;"
+ "            ELSE"
+ "                INSERT INTO MSA.MSA_SUB_PARTCOMB VALUES (in_part_id, faultt"
+ "ypeREC.faulttype_id);"
+ "            END IF;"
+ "        END IF;"
+ "   END LOOP;"
+ "   COMMIT;"
+ "END;"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE PROCEDURE     MSA_SUB_FAULT_MACRO_FCR_CK"
+ "(in_subser_id IN NUMBER,"
+ " in_success IN NUMBER)"
+ "IS"
+ "    counter NUMBER;"
+ "    success_var NUMBER;"
+ "BEGIN"
+ "    counter := 0;"
+ "    SELECT count(*) INTO counter FROM MSA.MSA_SUB_FAULT f"
+ "    WHERE f.subser_id = in_subser_id"
+ "    AND f.success = -2"
+ "    AND f.single_id > 0;"
+ "    IF (counter = 0) THEN"
+ "      --Update of failure in macro record, which works as a flag for if all"
+ " single successes have"
+ "      --been updated"
+ "        UPDATE MSA.MSA_SUB_FAULT SET failure = 0 WHERE single_id = 0"
+ "            AND subser_id = in_subser_id;"
+ "    END IF;"
+ "    SELECT min(f.success) INTO success_var FROM MSA.MSA_SUB_FAULT f"
+ "       WHERE f.subser_id = in_subser_id"
+ "       AND f.success >= 0"
+ "       AND f.single_id > 0;"
+ "    IF success_var IS NULL THEN"
+ "       success_var := in_success;"
+ "    END IF;"
+ "    UPDATE MSA.MSA_SUB_FAULT f SET success = success_var"
+ "       WHERE f.subser_id = in_subser_id"
+ "       AND f.single_id = 0;"
+ "    UPDATE MSA.MSA_SUB_SER f SET spare = success_var"
+ "       WHERE f.subser_id = in_subser_id;"
+ "END;"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE FUNCTION     MSA_APPR_REPAIR_GET_NO_REC(serno NUMBER)"
+ "RETURN NUMBER"
+ "IS"
+ "    no    NUMBER(10);"
+ "BEGIN"
+ "    SELECT count(*) INTO no FROM MSA.MSA_APPR_REPAIR WHERE serialno = serno"
+ ";"
+ "    DELETE from MSA.MSA_APPR_REPAIR WHERE serialno = serno;"
+ "    RETURN no;"
+ "END;"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE FUNCTION     MSA_APPR_STATE_GET_ID"
+ "RETURN NUMBER"
+ "IS"
+ "    appr_id    NUMBER(10);"
+ "BEGIN"
+ "    SELECT MSA.MSA_APPR_STATE_seq.NEXTVAL INTO appr_id from dual;"
+ "    RETURN appr_id;"
+ "END;"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE FUNCTION     MSA_APPR_SINGLE_UPDATE"
+ "  (in_macrofile_id IN NUMBER,"
+ "   in_uut_id IN NUMBER)"
+ "RETURN NUMBER"
+ "IS"
+ "    CURSOR C1 IS SELECT * FROM PROD.P_MACRODEF WHERE macrofile_id = in_macr"
+ "ofile_id AND"
+ "   uut_id = in_uut_id;"
+ "    macro_cnt  NUMBER;"
+ "--   fHandle UTL_FILE.FILE_TYPE;"
+ "--   vText varchar2(100);"
+ " BEGIN"
+ "   macro_cnt := 0;"
+ "--  fHandle := UTL_FILE.FOPEN('c:','utlfile.txt','w');"
+ "--   vText := 'Begin\n';"
+ "--   UTL_FILE.PUTF(fHandle,vText);"
+ "   FOR C1REC IN C1 LOOP"
+ "--   vText := 'C1Rec loop : ' || macro_cnt ||'  Macrodef_id: ' || C1REC.mac"
+ "rodef_id ||'Sequence: ' ||"
+ "--                 C1REC.sequence || '\n';"
+ "--  UTL_FILE.PUTF(fHandle,vText);"
+ "  UPDATE MSA.MSA_APPR_SINGLE SET sequence = C1REC.sequence WHERE appr_macro"
+ "_id IN"
+ "     (SELECT appr_macro_id  FROM MSA.MSA_APPR_MACRO WHERE macrofile_id = in"
+ "_macrofile_id AND"
+ "     appr_state_id IN (SELECT appr_state_id from MSA.MSA_APPR_STATE  WHERE "
+ "status < 1)) AND"
+ "     macrodef_id = C1REC.macrodef_id  and sequence != C1REC.sequence;"
+ "  macro_cnt := macro_cnt + 1;"
+ "  COMMIT;"
+ "  END LOOP;"
+ "--  UTL_FILE.FCLOSE(fHandle);"
+ " RETURN macro_cnt;"
+ "/* EXCEPTION"
+ "   WHEN UTL_FILE.INVALID_PATH THEN"
+ "     RAISE_APPLICATION_ERROR(-20100,'Invalid Path');"
+ "   WHEN UTL_FILE.INVALID_MODE THEN"
+ "     RAISE_APPLICATION_ERROR(-20101,'Invalid Mode');"
+ "   WHEN UTL_FILE.INVALID_OPERATION then"
+ "     RAISE_APPLICATION_ERROR(-20102,'Invalid Operation');"
+ "   WHEN UTL_FILE.INVALID_FILEHANDLE then"
+ "     RAISE_APPLICATION_ERROR(-20103,'Invalid Filehandle');"
+ "   WHEN UTL_FILE.WRITE_ERROR then"
+ "     RAISE_APPLICATION_ERROR(-20104,'Write Error');"
+ "   WHEN UTL_FILE.READ_ERROR then"
+ "     RAISE_APPLICATION_ERROR(-20105,'Read Error');"
+ "   WHEN UTL_FILE.INTERNAL_ERROR then"
+ "     RAISE_APPLICATION_ERROR(-20106,'Internal Error');"
+ "   WHEN OTHERS THEN"
+ "     UTL_FILE.FCLOSE(fHandle); */"
+ " RETURN macro_cnt;"
+ " END;"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE FUNCTION     MSA_MACRO_CK"
+ "  (in_uut_id IN NUMBER,"
+ "   in_serialno IN NUMBER,"
+ "   in_macro_id IN NUMBER,"
+ "   in_macrodef_id IN NUMBER)"
+ "RETURN NUMBER"
+ "IS"
+ "   plsql_block VARCHAR2(200);"
+ "   out_no_failure    NUMBER(10,0);"
+ "   int_single_id     NUMBER(10,0);"
+ "   multi             MSA.MSA_MULTI_MACRO%ROWTYPE;"
+ "   int_singletest_id NUMBER(10,0);"
+ "   int_table_res     VARCHAR2(50);"
+ "BEGIN"
+ "   SELECT single_id, singletest_id INTO int_single_id, int_singletest_id FR"
+ "OM MSA.MSA_SINGLE"
+ "                      WHERE macro_id = in_macro_id"
+ "                    AND macrodef_id = in_macrodef_id ;"
+ "   plsql_block := 'SELECT * FROM MSA.MSA_MULTI_MACRO WHERE macro_id = :b3 A"
+ "ND serialno = :b4';"
+ "   --DBMS_OUTPUT.PUT_LINE('SQL : ' || plsql_block);"
+ "   EXECUTE IMMEDIATE plsql_block INTO multi USING IN in_macro_id,  IN in_se"
+ "rialno;"
+ "   --DBMS_OUTPUT.PUT_LINE('Chan : ' || TO_CHAR(multi.chan));"
+ "   SELECT table_res INTO int_table_res FROM PROD.SINGLETEST WHERE singletes"
+ "t_id = int_singletest_id"
+ "                                   AND uut_id = in_uut_id;"
+ "   --DBMS_OUTPUT.PUT_LINE('Result Table : ' || int_table_res);"
+ "   plsql_block := 'select count(*)  from ' || int_table_res || ' where errc"
+ "ode > 0 AND' ||"
+ "                   ' single_id = :b1 AND chan = :b2';"
+ "   --DBMS_OUTPUT.PUT_LINE('SQL : ' || plsql_block);"
+ "   EXECUTE IMMEDIATE plsql_block INTO out_no_failure USING IN int_single_id"
+ ",  IN multi.chan;"
+ "   --DBMS_OUTPUT.PUT_LINE('No Failure : ' || TO_CHAR(out_no_failure));"
+ "RETURN out_no_failure;"
+ "END;"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE function     MSA_MACRO_CK_COUNT"
+ "           (in_macro_id IN NUMBER,"
+ "           in_macrodef_id IN NUMBER)"
+ "RETURN NUMBER"
+ "IS"
+ "     out_count NUMBER(10,0);"
+ "BEGIN"
+ "     SELECT count(*) INTO out_count FROM MSA.MSA_SINGLE  WHERE macro_id = i"
+ "n_macro_id"
+ "            AND macrodef_id = in_macrodef_id AND err_status = 0;"
+ "     RETURN out_count;"
+ "END;"
+IMP-00015: following statement failed because the object already exists:
+ "CREATE FUNCTION     MSA_MACRO_SINGLE_ERR"
+ "  (in_macro_id IN NUMBER,"
+ "   in_serialno IN NUMBER)"
+ "RETURN NUMBER"
+ "IS"
+ "   CURSOR C1 IS SELECT * FROM MSA.MSA_SINGLE WHERE macro_id = in_macro_id;"
+ "   plsql_block VARCHAR2(200);"
+ "   ct                NUMBER(10,0);"
+ "   chan              NUMBER(10,0);"
+ "   out_no_failure    NUMBER(10,0);"
+ "   no_failure        NUMBER(10,0);"
+ "   int_table_res     VARCHAR2(50);"
+ "BEGIN"
+ "   ct := -1;"
+ "   chan := -1;"
+ "   out_no_failure := 0;"
+ "   plsql_block := 'SELECT count(*) FROM MSA.MSA_MULTI_MACRO WHERE macro_id "
+ "= :b3 AND serialno = :b4';"
+ "   --DBMS_OUTPUT.PUT_LINE('SQL : ' || plsql_block);"
+ "   EXECUTE IMMEDIATE plsql_block INTO ct USING IN in_macro_id,  IN in_seria"
+ "lno;"
+ "   --DBMS_OUTPUT.PUT_LINE('Count : ' || TO_CHAR(ct));"
+ "   IF ct = 0 THEN"
+ "         RETURN 0;"
+ "   END IF;"
+ "   plsql_block := 'SELECT chan FROM MSA.MSA_MULTI_MACRO WHERE macro_id = :b"
+ "3 AND serialno = :b4';"
+ "   --DBMS_OUTPUT.PUT_LINE('SQL : ' || plsql_block);"
+ "   EXECUTE IMMEDIATE plsql_block INTO chan USING IN in_macro_id,  IN in_ser"
+ "ialno;"
+ "   --DBMS_OUTPUT.PUT_LINE('Chan : ' || TO_CHAR(ct));"
+ "   FOR C1REC IN C1 LOOP"
+ "      SELECT table_res INTO int_table_res FROM PROD.SINGLETEST WHERE single"
+ "test_id = C1REC.singletest_id"
+ "                                   AND uut_id = C1REC.uut_id;"
+ "      --DBMS_OUTPUT.PUT_LINE('Result Table : ' || int_table_res);"
+ "      plsql_block := 'select count(*)  from ' || int_table_res || ' where e"
+ "rrcode > 0 AND' ||"
+ "                   ' single_id = :b1 AND chan = :b2';"
+ "      --DBMS_OUTPUT.PUT_LINE('SQL : ' || plsql_block);"
+ "      EXECUTE IMMEDIATE plsql_block INTO no_failure USING IN C1REC.single_i"
+ "d,  IN chan;"
+ "      --DBMS_OUTPUT.PUT_LINE('No Failure : ' || TO_CHAR(no_failure));"
+ "      IF no_failure = 0 THEN"
+ "      plsql_block := 'select err_status  from ' || 'MSA.MSA_SINGLE' || ' wh"
+ "ere ' ||"
+ "                         ' single_id = :b1';"
+ "      --DBMS_OUTPUT.PUT_LINE('SQL : ' || plsql_block);"
+ "      EXECUTE IMMEDIATE plsql_block INTO no_failure USING IN C1REC.single_i"
+ "d;"
+ "      --DBMS_OUTPUT.PUT_LINE('No Failure : ' || TO_CHAR(no_failure));"
+ "      END IF;"
+ "      IF no_failure != 0 THEN"
+ "          out_no_failure := out_no_failure +1;"
+ "      END IF;"
+ "   END LOOP;"
+ "RETURN out_no_failure;"
+ "END;"
+IMP-00017: following statement failed with ORACLE error 4052:
+ "ALTER PROCEDURE "MSA_SINGLE_CAL_UPD_FROM_FLXPL" COMPILE REUSE SETTINGS TIME"
+ "STAMP '2010-11-18:16:22:25'"
+IMP-00003: ORACLE error 4052 encountered
+ORA-04052: error occurred when looking up remote object MSA.MSA_SINGLE_CAL@PROD_FLXPL.REGRESS.RDBMS.DEV.US.ORACLE.COM
+ORA-00604: error occurred at recursive SQL level 1
+ORA-02019: connection description for remote database not found
+IMP-00017: following statement failed with ORACLE error 4052:
+ "ALTER PROCEDURE "MSA_SINGLE_CAL_MOVE_FROM_FLXPL" COMPILE REUSE SETTINGS TIM"
+ "ESTAMP '2010-11-18:16:22:14'"
+IMP-00003: ORACLE error 4052 encountered
+ORA-04052: error occurred when looking up remote object MSA.MSA_SINGLE_CAL@PROD_FLXPL.REGRESS.RDBMS.DEV.US.ORACLE.COM
+ORA-00604: error occurred at recursive SQL level 1
+ORA-02019: connection description for remote database not found
+About to enable constraints...
+Import terminated successfully with warnings.

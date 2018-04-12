@@ -1,0 +1,7 @@
+set dbid=1244687135
+startup nomount
+restore controlfile from '/media/usbdisk/backupdata/flex/rman/ora_df707565708_s117_s1';
+alter database mount
+restore database
+recover database noredo
+sql 'alter database open resetlogs';

@@ -1,0 +1,17 @@
+#!/usr/bin/expect --
+#exp_internal 1
+set timeout 120
+#Copies the last DB backup file from ITCH
+# to /media/usbdisk/backupdata/itch
+set ldir /media/usbdisk/backupdata/itch
+set rhost 192.23.171.52
+set ruser spa
+set rfile /cygdrive/d/backup/backup_zip/*
+spawn scp $ruser@$rhost:$rfile $ldir
+#spawn /export/home/oracle/scp-itch.sh
+expect "*password*"
+send "spa\r"
+set timeout 18000
+expect "*bash*"
+#close
+wait

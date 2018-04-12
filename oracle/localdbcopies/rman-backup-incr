@@ -1,0 +1,1 @@
+backup as compressed backupset INCREMENTAL LEVEL 1 DATABASE;

@@ -1,0 +1,8 @@
+startup nomount
+restore controlfile from '/media/usbdisk/backupdata/flex/rman/ora_df751551543_s2138_s1';
+alter database mount;
+sql 'alter database noarchivelog';
+restore database;
+recover database;
+sql 'alter database open resetlogs';
+quit

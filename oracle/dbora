@@ -1,0 +1,30 @@
+#!/bin/sh
+
+
+# Set ORA_HOME to be equivalent to the ORACLE_HOME
+# from witch you wish to execute dbstart and dbshut;
+#
+# Set ORA_OWNER to the user id of the owner of the
+# Oracle database in ORA_HOME
+
+ORA_HOME=/u01/app/oracle/product/10.2.0/db
+ORA_OWNER=oracle
+
+if [ ! -f $ORA_HOME/bin/dbstart ]
+then
+        echo "Oracle startup: cannot start"
+        exit
+fi
+case "$1" in
+        'start')
+                # Start the Oracle databses:
+                su - $ORA_OWNER -c "sqlplus /nolog @startup.sql"
+                su - $ORA_OWNER -c "$ORA_HOME/bin/lsnrctl start"
+        ;;
+        'stop')
+                #Stop the Oracle databases:
+                su - $ORA_OWNER -c "$ORA_HOME/bin/lsnrctl stop"
+                su - $ORA_OWNER -c "sqlplus /nolog @shutdown.sql"
+        ;;
+esac
+

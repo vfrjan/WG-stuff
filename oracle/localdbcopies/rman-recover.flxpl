@@ -1,0 +1,7 @@
+startup nomount
+restore controlfile from '/media/usbdisk/backupdata/flxpl/rman/ora_df895615632_s18704_s1';
+alter database mount;
+restore database;
+recover database;
+sql 'alter database noarchivelog';
+quit

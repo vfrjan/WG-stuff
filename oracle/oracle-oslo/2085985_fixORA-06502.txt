@@ -1,0 +1,2080 @@
+
+  CREATE OR REPLACE PROCEDURE "L_PURGE_STAT2_PROC" -- @@@@
+
+-- ==================================================================
+ 
+-- ==================================================================
+ as
+ 
+ v_start TIMESTAMP(3);
+ v_cnt_1 NUMBER(10,0);
+ v_cnt_2 NUMBER(10,0);
+ v_tid_1 NUMBER(10,0);
+ v_tid_2 NUMBER(10,0);
+ v_tid_3 NUMBER(10,0);
+ v_tid_4 NUMBER(10,0);
+ v_level varchar2(50);
+ v_errnum pls_integer := 0;
+ v_errmsg VARCHAR2(1000);
+ v_chk VARCHAR2(200);
+
+BEGIN
+
+ -- Check what to log for this procedure execution from VPX_PARAMETER
+ -- should be one of:
+ -- 'OFF' - nothing
+ -- 'ERR' - errors
+ -- 'INF' - performance + errors
+ -- 'CHK' - addittional checks + performance + errors
+
+ begin
+ select SUBSTR(value,1,3) INTO v_level 
+ from vpx_parameter 
+ where name = 'DBProc.Log.Level.Stats.Purge2'; -- @@@@
+ exception
+ when no_data_found then
+ null;
+ end;
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := coalesce(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ IF v_level in('INF','CHK') THEN
+ 
+ select count(1) INTO v_cnt_1 
+ from VPX_HIST_STAT2; -- @@@@
+
+ IF v_level = 'CHK' THEN
+ begin
+ select min(time_id) INTO v_tid_1
+ from VPX_SAMPLE_TIME2 -- @@@@
+ where rollup_counter is NOT NULL;
+ exception
+ WHEN OTHERS THEN
+ NULL;
+ end;
+ begin
+ select min(time_id) INTO v_tid_2
+ from VPX_HIST_STAT2; -- @@@@
+ exception
+ WHEN OTHERS THEN
+ NULL;
+ end;
+ end if;
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ BEGIN
+ PURGE_STAT2_PROC(); -- @@@@
+ EXCEPTION WHEN OTHERS THEN
+ v_errnum := SQLCODE;
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- If loging level is OFF or (logging level is ERR and there was no errors) then exit
+ IF (v_level = 'OFF') OR (v_level = 'ERR' AND v_errnum = 0) then
+ RETURN;
+ end if;
+
+ -- Else log basic execution info
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('PURGE_STAT2_PROC', -- @@@@
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ case v_errnum
+ when 0 then 'N'
+ else 'Y'
+ end,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_errnum
+ when 0 then v_level
+ else v_errmsg
+ end);
+
+ -- If loging level is higher then errors only update the log record
+ -- with additional info appropriately
+ 
+ IF v_level in('INF','CHK') then
+
+ select count(*) INTO v_cnt_2 
+ from VPX_HIST_STAT2; -- @@@@
+
+ IF v_level = 'CHK' then
+ begin
+ select min(time_id) INTO v_tid_3 
+ from VPX_SAMPLE_TIME2 -- @@@@
+ where rollup_counter is not NULL;
+ exception
+ WHEN OTHERS THEN
+ NULL;
+ end;
+ begin
+ select min(time_id) INTO v_tid_4
+ from VPX_HIST_STAT2; -- @@@@
+ exception
+ WHEN OTHERS THEN
+ NULL;
+ end;
+
+ v_chk := cast(v_tid_1 as VARCHAR2) || ',' || cast(v_tid_2 as VARCHAR2)
+ || ';' || cast(v_tid_3 as VARCHAR2) || ',' || cast(v_tid_4 as VARCHAR2);
+ if v_tid_1 = v_tid_2 and v_tid_3 = v_tid_4 then
+ v_chk := 'OK! ' || v_chk;
+ else
+ v_chk := '*** ' || v_chk;
+ end if;
+ end if;
+
+ update vpx_proc_log
+ set src_rows = coalesce(v_cnt_1 -v_cnt_2,0),chk_results = v_chk
+ where proc_name = 'PURGE_STAT2_PROC' -- @@@@
+ and start_dt = v_start;
+
+ end if;
+
+END l_purge_stat2_proc;
+
+
+/
+
+  CREATE OR REPLACE PROCEDURE "L_PURGE_STAT3_PROC" -- @@@@
+
+-- ==================================================================
+ 
+-- ==================================================================
+ as
+ 
+ v_start TIMESTAMP(3);
+ v_cnt_1 NUMBER(10,0);
+ v_cnt_2 NUMBER(10,0);
+ v_tid_1 NUMBER(10,0);
+ v_tid_2 NUMBER(10,0);
+ v_tid_3 NUMBER(10,0);
+ v_tid_4 NUMBER(10,0);
+ v_level varchar2(50);
+ v_errnum pls_integer := 0;
+ v_errmsg VARCHAR2(1000);
+ v_chk VARCHAR2(200);
+
+BEGIN
+
+ -- Check what to log for this procedure execution from VPX_PARAMETER
+ -- should be one of:
+ -- 'OFF' - nothing
+ -- 'ERR' - errors
+ -- 'INF' - performance + errors
+ -- 'CHK' - addittional checks + performance + errors
+
+ begin
+ select SUBSTR(value,1,3) INTO v_level 
+ from vpx_parameter 
+ where name = 'DBProc.Log.Level.Stats.Purge3'; -- @@@@
+ exception
+ when no_data_found then
+ null;
+ end;
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := coalesce(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ IF v_level in('INF','CHK') THEN
+ 
+ select count(1) INTO v_cnt_1 
+ from VPX_HIST_STAT3; -- @@@@
+
+ IF v_level = 'CHK' THEN
+ begin
+ select min(time_id) INTO v_tid_1
+ from VPX_SAMPLE_TIME3 -- @@@@
+ where rollup_counter is NOT NULL;
+ exception
+ WHEN OTHERS THEN
+ NULL;
+ end;
+ begin
+ select min(time_id) INTO v_tid_2
+ from VPX_HIST_STAT3; -- @@@@
+ exception
+ WHEN OTHERS THEN
+ NULL;
+ end;
+ end if;
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ BEGIN
+ PURGE_STAT3_PROC(); -- @@@@
+ EXCEPTION WHEN OTHERS THEN
+ v_errnum := SQLCODE;
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- If loging level is OFF or (logging level is ERR and there was no errors) then exit
+ IF (v_level = 'OFF') OR (v_level = 'ERR' AND v_errnum = 0) then
+ RETURN;
+ end if;
+
+ -- Else log basic execution info
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('PURGE_STAT3_PROC', -- @@@@
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ case v_errnum
+ when 0 then 'N'
+ else 'Y'
+ end,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_errnum
+ when 0 then v_level
+ else v_errmsg
+ end);
+
+ -- If loging level is higher then errors only update the log record
+ -- with additional info appropriately
+ 
+ IF v_level in('INF','CHK') then
+
+ select count(*) INTO v_cnt_2 
+ from VPX_HIST_STAT3; -- @@@@
+
+ IF v_level = 'CHK' then
+ begin
+ select min(time_id) INTO v_tid_3 
+ from VPX_SAMPLE_TIME3 -- @@@@
+ where rollup_counter is not NULL;
+ exception
+ WHEN OTHERS THEN
+ NULL;
+ end;
+ begin
+ select min(time_id) INTO v_tid_4
+ from VPX_HIST_STAT3; -- @@@@
+ exception
+ WHEN OTHERS THEN
+ NULL;
+ end;
+
+ v_chk := cast(v_tid_1 as VARCHAR2) || ',' || cast(v_tid_2 as VARCHAR2)
+ || ';' || cast(v_tid_3 as VARCHAR2) || ',' || cast(v_tid_4 as VARCHAR2);
+ if v_tid_1 = v_tid_2 and v_tid_3 = v_tid_4 then
+ v_chk := 'OK! ' || v_chk;
+ else
+ v_chk := '*** ' || v_chk;
+ end if;
+ end if;
+
+ update vpx_proc_log
+ set src_rows = coalesce(v_cnt_1 -v_cnt_2,0),chk_results = v_chk
+ where proc_name = 'PURGE_STAT3_PROC' -- @@@@
+ and start_dt = v_start;
+
+ end if;
+
+END l_purge_stat3_proc;
+
+
+/
+
+
+create or replace
+procedure l_stats_rollup1_proc -- @@@@
+
+-- ==================================================================
+ 
+-- ==================================================================
+ as
+ 
+ v_start TIMESTAMP(3);
+ v_cnt_1 NUMBER(10,0); -- source rows marked as processed
+ v_cnt_2 NUMBER(10,0); -- target rows inserted according time_id rules
+ v_tid_1 NUMBER(10,0); -- start source time_id
+ v_tid_2 NUMBER(10,0); -- final source time_id
+ v_tid_3 NUMBER(10,0); -- start destination time_id
+ v_tid_4 NUMBER(10,0); -- final destination time_id
+ v_level varchar2(50); -- loging level
+ v_errnum pls_integer := 0;
+ v_errmsg VARCHAR2(1000); -- catched exception Msg
+
+ v_stat_rollup_level NUMBER(10,0);
+ v_null_device_id NUMBER(10,0);
+ v_c1 NUMBER(10,0); -- source rows must be processed
+ v_c2 NUMBER(10,0); -- target rows must be processed
+ v_c3 NUMBER(10,0); -- target rows before rollup
+ v_c4 NUMBER(10,0); -- target rows after rollup
+ v_chk VARCHAR2(200); -- checks results to be loged for level CHK - marked with prefix 'OK!' or '***' according to the correctness verifications
+
+BEGIN
+
+ -- Check what to log for this procedure execution from VPX_PARAMETER
+ -- should be one of:
+ -- 'OFF' - nothing
+ -- 'ERR' - errors
+ -- 'INF' - performance + errors
+ -- 'CHK' - addittional checks + performance + errors
+
+ begin
+ select SUBSTR(value,1,3) INTO v_level
+ from vpx_parameter
+ WHERE name = 'DBProc.Log.Level.Stats.Rollup1'; --@@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := NVL(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ IF v_level in('INF','CHK') then
+ begin
+ select min(time_id) INTO v_tid_1
+ from VPX_SAMPLE_TIME1 -- @@@@
+ where rollup_counter is NULL;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ begin
+ select NVL(max(time_id),0)+1 INTO v_tid_3
+ from VPX_SAMPLE_TIME2 WHERE ROWNUM <=1; -- @@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ IF v_level = 'CHK' then
+ select count(*) INTO v_c3
+ from VPX_HIST_STAT2; -- @@@@
+ end if;
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ BEGIN
+ STATS_ROLLUP1_PROC(); -- @@@@
+ EXCEPTION WHEN OTHERS THEN
+ v_errnum := SQLCODE;
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- If logging level is OFF or (logging level is ERR and there was no errors) then exit
+ IF (v_level = 'OFF') OR (v_level = 'ERR' and v_errnum = 0) then
+ RETURN;
+ end if;
+
+ -- Else log basic execution info
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('STATS_ROLLUP1_PROC', -- @@@@
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ case v_errnum
+ when 0 then 'N'
+ else 'Y'
+ end,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_errnum -- !!!!!
+ when 0 then v_level
+ else v_errmsg
+ end);
+
+ -- If looging level is higher then ERR update the log record
+ -- with additional info appropriately
+ IF v_level in('INF','CHK') then
+ begin
+ select max(time_id) INTO v_tid_2
+ from VPX_SAMPLE_TIME1 -- @@@@
+ where rollup_counter is not NULL;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ begin
+ select max(time_id) INTO v_tid_4
+ from VPX_SAMPLE_TIME2; --@@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ select count(1) INTO v_cnt_1 from VPX_HIST_STAT1 where time_id between v_tid_1 and v_tid_2;
+ select count(1) INTO v_cnt_2 from VPX_HIST_STAT2 where time_id between v_tid_3 and v_tid_4;
+ IF v_level = 'CHK' then
+ begin
+ select stats_level INTO v_stat_rollup_level
+ from vpx_stat_interval_def
+ WHERE (interval_seq_num = 2); -- @@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ v_null_device_id := 1;
+ -- source rows count that must be processed
+ select count(1) INTO v_c1
+ FROM vpx_stat_counter c, vpx_stat_def d, vpx_hist_stat1 s -- @@@@
+ WHERE s.counter_id = c.counter_id
+ AND c.stat_id = d.id
+ AND s.time_id between v_tid_1 and v_tid_2
+ AND ((c.device_id = v_null_device_id and d.stat_level <= v_stat_rollup_level)
+ OR (c.device_id != v_null_device_id and d.perdevice_stat_level <= v_stat_rollup_level));
+
+ -- destination rows count that must be inserted
+ begin
+ select sum(cnt) INTO v_c2
+ FROM(SELECT count(distinct s.counter_id) cnt
+ FROM vpx_stat_counter c, vpx_stat_def d,
+ VPX_HIST_STAT1 s, VPX_SAMPLE_TIME1 t -- @@@@
+ WHERE s.counter_id = c.counter_id
+ AND c.stat_id = d.id
+ AND t.time_id = s.time_id
+ AND s.time_id between v_tid_1 and v_tid_2
+ AND ((c.device_id = v_null_device_id and d.stat_level <= v_stat_rollup_level)
+ OR (c.device_id != v_null_device_id and d.perdevice_stat_level <= v_stat_rollup_level))
+ GROUP BY t.rollup_counter) t;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ select count(1) INTO v_c4
+ from VPX_HIST_STAT2; -- @@@@
+ v_chk := SUBSTR(cast(v_c1 as VARCHAR2),1,30) || ',' || SUBSTR(cast(v_c2 as VARCHAR2),1,30)
+ || ';  ' || SUBSTR(cast(v_c3 as VARCHAR2),1,30) || ',' || SUBSTR(cast(v_c4 as VARCHAR2),1,30)
+ || ';  ' || SUBSTR(cast(v_tid_1 as VARCHAR2),1,30) || ',' || SUBSTR(cast(v_tid_2 as VARCHAR2),1,30);
+
+ -- Mark CHK_RESULTS with prefix "OK! " or "*** " according to the following comparisons:
+ -- - source rows marked as processed = source rows must be processed
+ -- - target rows inserted according time_id rules = target rows must be processed
+ -- - target rows must be processed = target rows after rollup - target rows before rollup
+ IF v_c1 = v_cnt_1 AND v_c2 = v_cnt_2 AND v_c2 = v_c4 -v_c3 then
+ v_chk := 'OK! ' || v_chk;
+ ELSE
+ v_chk := '*** ' || v_chk;
+ end if;
+ end if;
+ update vpx_proc_log
+ set src_rows = COALESCE(v_cnt_1,0),tgt_rows = COALESCE(v_cnt_2,0),chk_results = v_chk
+ where proc_name = 'STATS_ROLLUP1_PROC' -- @@@@
+ and start_dt = v_start;
+ end if;
+EXCEPTION
+ WHEN OTHERS THEN NULL;
+END l_stats_rollup1_proc;
+
+/
+
+create or replace
+procedure l_stats_rollup2_proc -- @@@@
+
+-- ==================================================================
+ 
+-- ==================================================================
+ as
+ 
+ v_start TIMESTAMP(3);
+ v_cnt_1 NUMBER(10,0); -- source rows marked as processed
+ v_cnt_2 NUMBER(10,0); -- target rows inserted according time_id rules
+ v_tid_1 NUMBER(10,0); -- start source time_id
+ v_tid_2 NUMBER(10,0); -- final source time_id
+ v_tid_3 NUMBER(10,0); -- start destination time_id
+ v_tid_4 NUMBER(10,0); -- final destination time_id
+ v_level varchar2(50); -- loging level
+ v_errnum pls_integer := 0;
+ v_errmsg VARCHAR2(1000); -- catched exception Msg
+
+ v_stat_rollup_level NUMBER(10,0);
+ v_null_device_id NUMBER(10,0);
+ v_c1 NUMBER(10,0); -- source rows must be processed
+ v_c2 NUMBER(10,0); -- target rows must be processed
+ v_c3 NUMBER(10,0); -- target rows before rollup
+ v_c4 NUMBER(10,0); -- target rows after rollup
+ v_chk VARCHAR2(200); -- checks results to be loged for level CHK - marked with prefix 'OK!' or '***' according to the correctness verifications
+
+BEGIN
+
+ -- Check what to log for this procedure execution from VPX_PARAMETER
+ -- should be one of:
+ -- 'OFF' - nothing
+ -- 'ERR' - errors
+ -- 'INF' - performance + errors
+ -- 'CHK' - addittional checks + performance + errors
+
+ begin
+ select SUBSTR(value,1,3) INTO v_level
+ from vpx_parameter
+ WHERE name = 'DBProc.Log.Level.Stats.Rollup2'; --@@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := NVL(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ IF v_level in('INF','CHK') then
+ begin
+ select min(time_id) INTO v_tid_1
+ from VPX_SAMPLE_TIME2 -- @@@@
+ where rollup_counter is NULL;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ begin
+ select NVL(max(time_id),0)+1 INTO v_tid_3
+ from VPX_SAMPLE_TIME3 WHERE ROWNUM <=1; -- @@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ IF v_level = 'CHK' then
+ select count(*) INTO v_c3
+ from VPX_HIST_STAT3; -- @@@@
+ end if;
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ BEGIN
+ STATS_ROLLUP2_PROC(); -- @@@@
+ EXCEPTION WHEN OTHERS THEN
+ v_errnum := SQLCODE;
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- If logging level is OFF or (logging level is ERR and there was no errors) then exit
+ IF (v_level = 'OFF') OR (v_level = 'ERR' and v_errnum = 0) then
+ RETURN;
+ end if;
+
+ -- Else log basic execution info
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('STATS_ROLLUP2_PROC', -- @@@@
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ case v_errnum
+ when 0 then 'N'
+ else 'Y'
+ end,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_errnum -- !!!!!
+ when 0 then v_level
+ else v_errmsg
+ end);
+
+ -- If looging level is higher then ERR update the log record
+ -- with additional info appropriately
+ IF v_level in('INF','CHK') then
+ begin
+ select max(time_id) INTO v_tid_2
+ from VPX_SAMPLE_TIME2 -- @@@@
+ where rollup_counter is not NULL;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ begin
+ select max(time_id) INTO v_tid_4
+ from VPX_SAMPLE_TIME3; --@@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ select count(1) INTO v_cnt_1 from VPX_HIST_STAT2 where time_id between v_tid_1 and v_tid_2;
+ select count(1) INTO v_cnt_2 from VPX_HIST_STAT3 where time_id between v_tid_3 and v_tid_4;
+ IF v_level = 'CHK' then
+ begin
+ select stats_level INTO v_stat_rollup_level
+ from vpx_stat_interval_def
+ WHERE (interval_seq_num = 3); -- @@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ v_null_device_id := 1;
+
+ -- source rows count that must be processed
+ select count(1) INTO v_c1
+ FROM vpx_stat_counter c, vpx_stat_def d, vpx_hist_stat2 s -- @@@@
+ WHERE s.counter_id = c.counter_id
+ AND c.stat_id = d.id
+ AND s.time_id between v_tid_1 and v_tid_2
+ AND ((c.device_id = v_null_device_id and d.stat_level <= v_stat_rollup_level)
+ OR (c.device_id != v_null_device_id and d.perdevice_stat_level <= v_stat_rollup_level));
+
+ -- destination rows count that must be inserted
+ begin
+ select sum(cnt) INTO v_c2
+ FROM(SELECT count(distinct s.counter_id) cnt
+ FROM vpx_stat_counter c, vpx_stat_def d,
+ VPX_HIST_STAT2 s, VPX_SAMPLE_TIME2 t -- @@@@
+ WHERE s.counter_id = c.counter_id
+ AND c.stat_id = d.id
+ AND t.time_id = s.time_id
+ AND s.time_id between v_tid_1 and v_tid_2
+ AND ((c.device_id = v_null_device_id and d.stat_level <= v_stat_rollup_level)
+ OR (c.device_id != v_null_device_id and d.perdevice_stat_level <= v_stat_rollup_level))
+ GROUP BY t.rollup_counter) t;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ select count(1) INTO v_c4
+ from VPX_HIST_STAT3; -- @@@@
+ v_chk := SUBSTR(cast(v_c1 as VARCHAR2),1,30) || ',' || SUBSTR(cast(v_c2 as VARCHAR2),1,30)
+ || ';  ' || SUBSTR(cast(v_c3 as VARCHAR2),1,30) || ',' || SUBSTR(cast(v_c4 as VARCHAR2),1,30)
+ || ';  ' || SUBSTR(cast(v_tid_1 as VARCHAR2),1,30) || ',' || SUBSTR(cast(v_tid_2 as VARCHAR2),1,30);
+
+ -- Mark CHK_RESULTS with prefix "OK! " or "*** " according to the following comparisons:
+ -- - source rows marked as processed = source rows must be processed
+ -- - target rows inserted according time_id rules = target rows must be processed
+ -- - target rows must be processed = target rows after rollup - target rows before rollup
+ IF v_c1 = v_cnt_1 AND v_c2 = v_cnt_2 AND v_c2 = v_c4 -v_c3 then
+ v_chk := 'OK! ' || v_chk;
+ ELSE
+ v_chk := '*** ' || v_chk;
+ end if;
+ end if;
+ update vpx_proc_log
+ set src_rows = COALESCE(v_cnt_1,0),tgt_rows = COALESCE(v_cnt_2,0),chk_results = v_chk
+ where proc_name = 'STATS_ROLLUP2_PROC' -- @@@@
+ and start_dt = v_start;
+ end if;
+EXCEPTION
+ WHEN OTHERS THEN NULL;
+END l_stats_rollup2_proc;
+
+/
+
+create or replace
+procedure l_stats_rollup3_proc -- @@@@
+
+-- ==================================================================
+ 
+-- ==================================================================
+ as
+ 
+ v_start TIMESTAMP(3);
+ v_cnt_1 NUMBER(10,0); -- source rows marked as processed
+ v_cnt_2 NUMBER(10,0); -- target rows inserted according time_id rules
+ v_tid_1 NUMBER(10,0); -- start source time_id
+ v_tid_2 NUMBER(10,0); -- final source time_id
+ v_tid_3 NUMBER(10,0); -- start destination time_id
+ v_tid_4 NUMBER(10,0); -- final destination time_id
+ v_level varchar2(50); -- loging level
+ v_errnum pls_integer := 0;
+ v_errmsg VARCHAR2(1000); -- catched exception Msg
+
+ v_stat_rollup_level NUMBER(10,0);
+ v_null_device_id NUMBER(10,0);
+ v_c1 NUMBER(10,0); -- source rows must be processed
+ v_c2 NUMBER(10,0); -- target rows must be processed
+ v_c3 NUMBER(10,0); -- target rows before rollup
+ v_c4 NUMBER(10,0); -- target rows after rollup
+ v_chk VARCHAR2(200); -- checks results to be loged for level CHK - marked with prefix 'OK!' or '***' according to the correctness verifications
+
+BEGIN
+
+ -- Check what to log for this procedure execution from VPX_PARAMETER
+ -- should be one of:
+ -- 'OFF' - nothing
+ -- 'ERR' - errors
+ -- 'INF' - performance + errors
+ -- 'CHK' - addittional checks + performance + errors
+
+ begin
+ select SUBSTR(value,1,3) INTO v_level
+ from vpx_parameter
+ WHERE name = 'DBProc.Log.Level.Stats.Rollup3'; --@@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := NVL(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ IF v_level in('INF','CHK') then
+ begin
+ select min(time_id) INTO v_tid_1
+ from VPX_SAMPLE_TIME3 -- @@@@
+ where rollup_counter is NULL;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ begin
+ select NVL(max(time_id),0)+1 INTO v_tid_3
+ from VPX_SAMPLE_TIME4 WHERE ROWNUM <=1; -- @@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ IF v_level = 'CHK' then
+ select count(*) INTO v_c3
+ from VPX_HIST_STAT4; -- @@@@
+ end if;
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ BEGIN
+ STATS_ROLLUP3_PROC(); -- @@@@
+ EXCEPTION WHEN OTHERS THEN
+ v_errnum := SQLCODE;
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- If logging level is OFF or (logging level is ERR and there was no errors) then exit
+ IF (v_level = 'OFF') OR (v_level = 'ERR' and v_errnum = 0) then
+ RETURN;
+ end if;
+
+ -- Else log basic execution info
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('STATS_ROLLUP3_PROC', -- @@@@
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ case v_errnum
+ when 0 then 'N'
+ else 'Y'
+ end,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_errnum -- !!!!!
+ when 0 then v_level
+ else v_errmsg
+ end);
+
+ -- If looging level is higher then ERR update the log record
+ -- with additional info appropriately
+ IF v_level in('INF','CHK') then
+ begin
+ select max(time_id) INTO v_tid_2
+ from VPX_SAMPLE_TIME3 -- @@@@
+ where rollup_counter is not NULL;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ begin
+ select max(time_id) INTO v_tid_4
+ from VPX_SAMPLE_TIME4; --@@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ select count(1) INTO v_cnt_1 from VPX_HIST_STAT3 where time_id between v_tid_1 and v_tid_2;
+ select count(1) INTO v_cnt_2 from VPX_HIST_STAT4 where time_id between v_tid_3 and v_tid_4;
+ IF v_level = 'CHK' then
+ begin
+ select stats_level INTO v_stat_rollup_level
+ from vpx_stat_interval_def
+ WHERE (interval_seq_num = 4); -- @@@@
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ v_null_device_id := 1;
+
+ -- source rows count that must be processed
+ select count(1) INTO v_c1
+ FROM vpx_stat_counter c, vpx_stat_def d, vpx_hist_stat3 s -- @@@@
+ WHERE s.counter_id = c.counter_id
+ AND c.stat_id = d.id
+ AND s.time_id between v_tid_1 and v_tid_2
+ AND ((c.device_id = v_null_device_id and d.stat_level <= v_stat_rollup_level)
+ OR (c.device_id != v_null_device_id and d.perdevice_stat_level <= v_stat_rollup_level));
+
+ -- destination rows count that must be inserted
+ begin
+ select sum(cnt) INTO v_c2
+ FROM(SELECT count(distinct s.counter_id) cnt
+ FROM vpx_stat_counter c, vpx_stat_def d,
+ VPX_HIST_STAT3 s, VPX_SAMPLE_TIME3 t -- @@@@
+ WHERE s.counter_id = c.counter_id
+ AND c.stat_id = d.id
+ AND t.time_id = s.time_id
+ AND s.time_id between v_tid_1 and v_tid_2
+ AND ((c.device_id = v_null_device_id and d.stat_level <= v_stat_rollup_level)
+ OR (c.device_id != v_null_device_id and d.perdevice_stat_level <= v_stat_rollup_level))
+ GROUP BY t.rollup_counter) t;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ NULL;
+ end;
+ select count(1) INTO v_c4
+ from VPX_HIST_STAT4; -- @@@@
+ v_chk := SUBSTR(cast(v_c1 as VARCHAR2),1,30) || ',' || SUBSTR(cast(v_c2 as VARCHAR2),1,30)
+ || ';  ' || SUBSTR(cast(v_c3 as VARCHAR2),1,30) || ',' || SUBSTR(cast(v_c4 as VARCHAR2),1,30)
+ || ';  ' || SUBSTR(cast(v_tid_1 as VARCHAR2),1,30) || ',' || SUBSTR(cast(v_tid_2 as VARCHAR2),1,30);
+
+ -- Mark CHK_RESULTS with prefix "OK! " or "*** " according to the following comparisons:
+ -- - source rows marked as processed = source rows must be processed
+ -- - target rows inserted according time_id rules = target rows must be processed
+ -- - target rows must be processed = target rows after rollup - target rows before rollup
+ IF v_c1 = v_cnt_1 AND v_c2 = v_cnt_2 AND v_c2 = v_c4 -v_c3 then
+ v_chk := 'OK! ' || v_chk;
+ ELSE
+ v_chk := '*** ' || v_chk;
+ end if;
+ end if;
+ update vpx_proc_log
+ set src_rows = COALESCE(v_cnt_1,0),tgt_rows = COALESCE(v_cnt_2,0),chk_results = v_chk
+ where proc_name = 'STATS_ROLLUP3_PROC' -- @@@@
+ and start_dt = v_start;
+ end if;
+EXCEPTION
+ WHEN OTHERS THEN NULL;
+END l_stats_rollup3_proc;
+
+
+/
+
+create or replace
+PROCEDURE rule_topn1_proc
+
+-----------------------------------------------------------------------------
+-- Procedure : rule_topn1_proc
+-- Description : This procedure controls processing and retention of daily
+-- Top N Ranking values.
+-- Should be run from job.
+-- Parameters : no
+-----------------------------------------------------------------------------
+
+ as
+ 
+ v_start TIMESTAMP(3);
+ v_cnt_1 NUMBER(10,0);
+ v_cnt_2 NUMBER(10,0);
+ v_level varchar2(50);
+ v_err CHAR(1) := 'N';
+ v_errmsg VARCHAR2(1000);
+
+ v_status VARCHAR2(10);
+ v_recovery_period NUMBER(4,0);
+ v_last_run TIMESTAMP(3);
+ v_last_stat TIMESTAMP(3);
+ v_job_id NUMBER(10,0);
+ v_log_rtn NUMBER(10,0);
+ v_time_level NUMBER(3,0);
+
+BEGIN
+
+ v_job_id := 1;
+ v_time_level := 1;
+ v_recovery_period := 30;
+
+ -- Step 1. Check whether the same job is currently runing
+ select status into v_status
+ from vpx_job_log
+ where job_id = v_job_id;
+
+ -- If yes - do nothing
+ if v_status = 'RUNNING' then
+ RETURN;
+ end if;
+
+ --If not in RUNNING state, set the job status to running now
+ UPDATE vpx_job_log
+ SET status = 'RUNNING'
+ WHERE job_id = v_job_id;
+
+
+ -- Get the last_processed_date,meaning when was the job last run
+ SELECT MAX(SAMPLE_TIME) into v_last_run
+ FROM VPX_TOPN_STATE
+ WHERE TIME_LEVEL = v_time_level;
+
+
+ --Get the lastest_time, data that is not processed yet
+ begin
+ select max(sample_time) - numtodsinterval(v_recovery_period,'minute') into v_last_stat
+ from vpx_sample_time1;
+ exception
+ when no_data_found then
+
+ UPDATE vpx_job_log
+ SET status = 'WAITING'
+ WHERE job_id = v_job_id;
+
+ return;
+ end;
+
+ -- Check what to log for calc topn procedure execution from VPX_PARAMETER
+ -- should be one of:
+ -- 'OFF' - nothing
+ -- 'ERR' - errors
+ -- 'INF' - performance + errors
+ -- 'CHK' - addittional checks + performance + errors
+
+ select SUBSTR(value,1,3) into v_level
+ from vpx_parameter
+ where name = 'DBProc.Log.Level.Topn.Calc1';
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := COALESCE(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ if v_level in('INF','CHK') then
+ --select count(1) into v_cnt_1 from VPX_TOPN_PAST_DAY;
+ select num_rows into v_cnt_1 from user_tables where table_name = 'VPX_TOPN_PAST_DAY';
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ -- when v_last_run is null, set v_last_run =(v_last_stat -v_recovery_period) -(happens @ VC initial start)
+ v_last_run := NVL(v_last_run, (v_last_stat - numtodsinterval(v_recovery_period,'minute')));
+
+
+ 
+ IF (v_last_run <= (v_last_stat - numtodsinterval(v_recovery_period,'minute'))) then
+ v_last_run := (v_last_stat - numtodsinterval(v_recovery_period,'minute'));
+ END IF;
+ --DBMS_OUTPUT.PUT_LINE('last_processed_date: ' || v_last_run);
+ --DBMS_OUTPUT.PUT_LINE('last_stat_date: ' || v_last_stat);
+
+
+ BEGIN
+ calc_topn1_proc(v_last_run,v_last_stat);
+ EXCEPTION
+ WHEN OTHERS THEN
+ v_err := 'Y';
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- Mark job as waiting
+ UPDATE vpx_job_log
+ SET status = 'WAITING',last_run = COALESCE(v_last_stat,v_last_run)
+ WHERE job_id = v_job_id;
+
+ -- According to the logging level log basic execution info
+ if v_level in('INF','CHK') then
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('CALC_TOPN1_PROC',
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ v_err,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_err
+ when 'N' then v_level
+ else v_errmsg
+ end);
+ end if;
+
+ -- If looging level is higher then errors only then update the log record
+ -- with additional info appropriately
+ if v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_2 from VPX_TOPN_PAST_DAY;
+ select num_rows into v_cnt_2 from user_tables where table_name = 'VPX_TOPN_PAST_DAY';
+
+
+ update vpx_proc_log
+ set tgt_rows = COALESCE(v_cnt_2 - v_cnt_1, 0)
+ where proc_name = 'CALC_TOPN1_PROC'
+ and start_dt = v_start;
+ end if;
+
+ v_err := 'N';
+ -- Step 6. Clear expired daily integrals
+ -- Check what to log for clear topn procedure execution from VPX_PARAMETER
+
+ select SUBSTR(value,1,3) INTO v_level
+ from vpx_parameter
+ WHERE name = 'DBProc.Log.Level.Topn.Purge1';
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := coalesce(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ if v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_1 from VPX_TOPN_PAST_DAY;
+ select num_rows into v_cnt_1 from user_tables where table_name = 'VPX_TOPN_PAST_DAY';
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ BEGIN
+ clear_topn1_proc();
+ EXCEPTION
+ WHEN OTHERS THEN
+ v_err := 'Y';
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- According to the logging level log basic execution info
+ IF (v_level in('INF','CHK')) OR (v_level = 'ERR') then
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('CLEAR_TOPN1_PROC',
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ v_err,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_err
+ when 'N' then v_level
+ else v_errmsg
+ end);
+ END IF;
+
+ -- If looging level is higher then errors only update the log record
+ -- with additional info appropriately
+ IF v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_2 from VPX_TOPN_PAST_DAY;
+ select num_rows into v_cnt_2 from user_tables where table_name = 'VPX_TOPN_PAST_DAY';
+
+ update vpx_proc_log
+ set src_rows = coalesce(v_cnt_1 -v_cnt_2,0)
+ where proc_name = 'CLEAR_TOPN1_PROC'
+ and start_dt = v_start;
+ end if;
+
+ -- Perform error log retention
+ select to_number(VALUE) INTO v_log_rtn
+ FROM vpx_parameter WHERE (NAME = 'DBProc.Log.Buffer');
+
+ DELETE FROM vpx_proc_log
+ WHERE start_dt not in (SELECT start_dt FROM vpx_proc_log where ROWNUM <= v_log_rtn);
+
+ COMMIT;
+
+EXCEPTION
+ WHEN OTHERS THEN
+
+ UPDATE vpx_job_log
+ SET status = 'WAITING'
+ WHERE job_id = v_job_id;
+ COMMIT;
+
+END rule_topn1_proc;
+
+/
+
+create or replace
+PROCEDURE rule_topn2_proc
+
+-----------------------------------------------------------------------------
+-- Procedure : rule_topn2_proc
+-- Description : This procedure controls processing and retention of weekly
+-- Top N Ranking values.
+-- Should be run from job.
+-- Parameters : no
+-----------------------------------------------------------------------------
+
+ as
+ 
+ v_start TIMESTAMP(3);
+ v_cnt_1 NUMBER(10,0);
+ v_cnt_2 NUMBER(10,0);
+ v_level varchar2(50);
+ v_err CHAR(1) := 'N';
+ v_errmsg VARCHAR2(1000);
+
+ v_status VARCHAR2(10);
+ v_recovery_period NUMBER(10,0);
+ v_last_run TIMESTAMP(3);
+ v_last_stat TIMESTAMP(3);
+ v_job_id NUMBER(10,0);
+ v_log_rtn NUMBER(10,0);
+ v_time_level NUMBER(3,0);
+
+
+BEGIN
+
+ v_job_id := 2;
+ v_time_level := 2;
+ v_recovery_period := 90;
+
+ -- Step 1. Check whether the same job is currently runing
+ select status into v_status
+ from vpx_job_log
+ where job_id = v_job_id;
+
+ -- If yes - do nothing
+ if v_status = 'RUNNING' then
+ RETURN;
+ end if;
+
+ --If not in RUNNING state, set the job status to running now
+ UPDATE vpx_job_log
+ SET status = 'RUNNING'
+ WHERE job_id = v_job_id;
+
+ -- Get the last_processed_date,meaning when was the job last run
+ SELECT MAX(SAMPLE_TIME) into v_last_run
+ FROM VPX_TOPN_STATE
+ WHERE TIME_LEVEL = v_time_level;
+
+ --Get the lastest_time, data that is not processed yet
+ begin
+ select max(sample_time) - numtodsinterval(v_recovery_period,'minute') into v_last_stat
+ from vpx_sample_time2;
+ exception
+ when no_data_found then
+
+ UPDATE vpx_job_log
+ SET status = 'WAITING'
+ WHERE job_id = v_job_id;
+
+ return;
+ end;
+
+ -- Check what to log for calc topn procedure execution from VPX_PARAMETER
+ -- should be one of:
+ -- 'OFF' - nothing
+ -- 'ERR' - errors
+ -- 'INF' - performance + errors
+ -- 'CHK' - addittional checks + performance + errors
+
+ select SUBSTR(value,1,3) into v_level
+ from vpx_parameter
+ where name = 'DBProc.Log.Level.Topn.Calc2';
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := COALESCE(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ if v_level in('INF','CHK') then
+ --select count(1) into v_cnt_1 from VPX_TOPN_PAST_WEEK;
+ select num_rows into v_cnt_1 from user_tables where table_name = 'VPX_TOPN_PAST_WEEK';
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ -- when v_last_run is null, set v_last_run =(v_last_stat -v_recovery_period) -(happens @ VC initial start)
+ v_last_run := NVL(v_last_run, (v_last_stat - numtodsinterval(v_recovery_period,'minute')));
+
+
+ 
+ IF (v_last_run <= (v_last_stat - numtodsinterval(v_recovery_period,'minute'))) then
+ v_last_run := (v_last_stat - numtodsinterval(v_recovery_period,'minute'));
+ END IF;
+ --DBMS_OUTPUT.PUT_LINE('last_processed_date: ' || v_last_run);
+ --DBMS_OUTPUT.PUT_LINE('last_stat_date: ' || v_last_stat);
+
+
+ BEGIN
+ calc_topn2_proc(v_last_run,v_last_stat);
+ EXCEPTION
+ WHEN OTHERS THEN
+ v_err := 'Y';
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- Step 5. Mark job as waiting
+ UPDATE vpx_job_log
+ SET status = 'WAITING',last_run = COALESCE(v_last_stat,v_last_run)
+ WHERE job_id = v_job_id;
+
+ -- According to the logging level log basic execution info
+ if v_level in('INF','CHK') then
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('CALC_TOPN2_PROC',
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ v_err,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_err
+ when 'N' then v_level
+ else v_errmsg
+ end);
+ end if;
+
+ -- If looging level is higher then errors only then update the log record
+ -- with additional info appropriately
+ if v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_2 from VPX_TOPN_PAST_WEEK;
+ select num_rows into v_cnt_2 from user_tables where table_name = 'VPX_TOPN_PAST_WEEK';
+ update vpx_proc_log
+ set tgt_rows = COALESCE(v_cnt_2 - v_cnt_1, 0)
+ where proc_name = 'CALC_TOPN2_PROC'
+ and start_dt = v_start;
+ end if;
+
+ v_err := 'N';
+ -- Step 6. Clear expired daily integrals
+ -- Check what to log for clear topn procedure execution from VPX_PARAMETER
+
+ select SUBSTR(value,1,3) INTO v_level
+ from vpx_parameter
+ WHERE name = 'DBProc.Log.Level.Topn.Purge2';
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := coalesce(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ if v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_1 from VPX_TOPN_PAST_WEEK;
+ select num_rows into v_cnt_1 from user_tables where table_name = 'VPX_TOPN_PAST_WEEK';
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ BEGIN
+ clear_topn2_proc();
+ EXCEPTION
+ WHEN OTHERS THEN
+ v_err := 'Y';
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- According to the logging level log basic execution info
+ IF (v_level in('INF','CHK')) OR (v_level = 'ERR') then
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('CLEAR_TOPN2_PROC',
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ v_err,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_err
+ when 'N' then v_level
+ else v_errmsg
+ end);
+ end if;
+
+ -- If looging level is higher then errors only update the log record
+ -- with additional info appropriately
+ IF v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_2 from VPX_TOPN_PAST_WEEK;
+ select num_rows into v_cnt_2 from user_tables where table_name = 'VPX_TOPN_PAST_WEEK';
+
+ update vpx_proc_log
+ set src_rows = coalesce(v_cnt_1 -v_cnt_2,0)
+ where proc_name = 'CLEAR_TOPN2_PROC'
+ and start_dt = v_start;
+ end if;
+
+ COMMIT;
+
+EXCEPTION
+ WHEN OTHERS THEN
+
+ UPDATE vpx_job_log
+ SET status = 'WAITING'
+ WHERE job_id = v_job_id;
+ COMMIT;
+
+END rule_topn2_proc;
+
+/
+
+create or replace
+PROCEDURE rule_topn3_proc
+
+-----------------------------------------------------------------------------
+-- Procedure : rule_topn3_proc
+-- Description : This procedure controls processing and retention of monthly
+-- Top N Ranking values.
+-- Should be run from job.
+-- Parameters : no
+-----------------------------------------------------------------------------
+
+ as
+ 
+ v_start TIMESTAMP(3);
+ v_cnt_1 NUMBER(10,0);
+ v_cnt_2 NUMBER(10,0);
+ v_level varchar2(50);
+ v_err CHAR(1) := 'N';
+ v_errmsg VARCHAR2(1000);
+
+ v_status VARCHAR2(10);
+ v_recovery_period NUMBER(10,0);
+ v_last_run TIMESTAMP(3);
+ v_last_stat TIMESTAMP(3);
+ v_job_id NUMBER(10,0);
+ v_log_rtn NUMBER(10,0);
+ v_time_level NUMBER(3,0);
+
+
+BEGIN
+
+ v_job_id := 3;
+ v_time_level := 3;
+ v_recovery_period := 360; --MINUTES(2hrs*3 = 6hours)
+
+ -- Step 1. Check whether the same job is currently runing
+ select status into v_status
+ from vpx_job_log
+ where job_id = v_job_id;
+
+ -- If yes - do nothing
+ IF v_status = 'RUNNING' then
+ RETURN;
+ end if;
+
+ -- Get the last_processed_date,meaning when was the job last run
+ SELECT MAX(SAMPLE_TIME) into v_last_run
+ FROM VPX_TOPN_STATE
+ WHERE TIME_LEVEL = v_time_level;
+
+ --Get the lastest_time, data that is not processed yet
+ begin
+ select max(sample_time) - numtodsinterval(v_recovery_period,'minute') into v_last_stat
+ from vpx_sample_time3;
+ exception
+ when no_data_found then
+
+ UPDATE vpx_job_log
+ SET status = 'WAITING'
+ WHERE job_id = v_job_id;
+
+ return;
+ end;
+
+ -- Check what to log for calc topn procedure execution from VPX_PARAMETER
+ -- should be one of:
+ -- 'OFF' - nothing
+ -- 'ERR' - errors
+ -- 'INF' - performance + errors
+ -- 'CHK' - addittional checks + performance + errors
+
+ select SUBSTR(value,1,3) into v_level
+ from vpx_parameter
+ where name = 'DBProc.Log.Level.Topn.Calc3';
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := COALESCE(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ if v_level in('INF','CHK') then
+ --select count(1) into v_cnt_1 from VPX_TOPN_PAST_MONTH;
+ select num_rows into v_cnt_1 from user_tables where table_name = 'VPX_TOPN_PAST_MONTH';
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ -- when v_last_run is null, set v_last_run =(v_last_stat -v_recovery_period) -(happens @ VC initial start)
+ v_last_run := NVL(v_last_run, (v_last_stat - numtodsinterval(v_recovery_period,'minute')));
+
+
+ 
+ IF (v_last_run <= (v_last_stat - numtodsinterval(v_recovery_period,'minute'))) then
+ v_last_run := (v_last_stat - numtodsinterval(v_recovery_period,'minute'));
+ END IF;
+ --DBMS_OUTPUT.PUT_LINE('last_processed_date: ' || v_last_run);
+ --DBMS_OUTPUT.PUT_LINE('last_stat_date: ' || v_last_stat);
+
+ BEGIN
+ calc_topn3_proc(v_last_run,v_last_stat);
+ EXCEPTION
+ WHEN OTHERS THEN
+ v_err := 'Y';
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- Step 5. Mark job as waiting
+ UPDATE vpx_job_log SET status = 'WAITING',last_run = COALESCE(v_last_stat,v_last_run)
+ WHERE job_id = v_job_id;
+
+ -- According to the logging level log basic execution info
+ IF v_level in('INF','CHK') then
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('CALC_TOPN3_PROC',
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ v_err,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_err
+ when 'N' then v_level
+ else v_errmsg
+ end);
+ end if;
+
+ -- If looging level is higher then errors only update the log record
+ -- with additional info appropriately
+ IF v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_2 from VPX_TOPN_PAST_MONTH;
+ select num_rows into v_cnt_2 from user_tables where table_name = 'VPX_TOPN_PAST_MONTH';
+
+ update vpx_proc_log
+ set tgt_rows = coalesce(v_cnt_2 -v_cnt_1,0)
+ where proc_name = 'CALC_TOPN3_PROC'
+ and start_dt = v_start;
+ end if;
+
+ v_err := 'N';
+ -- Step 6. Clear expired daily integrals
+ -- Check what to log for clear topn procedure execution from VPX_PARAMETER
+
+ select SUBSTR(value,1,3) INTO v_level
+ from vpx_parameter
+ WHERE (name = 'DBProc.Log.Level.Topn.Purge3');
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := coalesce(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ if v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_1 from VPX_TOPN_PAST_MONTH;
+ select num_rows into v_cnt_1 from user_tables where table_name = 'VPX_TOPN_PAST_MONTH';
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ BEGIN
+ clear_topn3_proc();
+ EXCEPTION
+ WHEN OTHERS THEN
+ v_err := 'Y';
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- According to the logging level log basic execution info
+ IF (v_level in('INF','CHK')) OR (v_level = 'ERR') then
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('CLEAR_TOPN3_PROC',
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ v_err,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_err
+ when 'N' then v_level
+ else v_errmsg
+ end);
+ end if;
+
+ -- If looging level is higher then errors only update the log record
+ -- with additional info appropriately
+ IF v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_2 from VPX_TOPN_PAST_MONTH;
+ select num_rows into v_cnt_2 from user_tables where table_name = 'VPX_TOPN_PAST_MONTH';
+
+ update vpx_proc_log
+ set src_rows = coalesce(v_cnt_1 -v_cnt_2,0)
+ where proc_name = 'CLEAR_TOPN3_PROC'
+ and start_dt = v_start;
+ end if;
+
+ COMMIT;
+
+EXCEPTION
+ WHEN OTHERS THEN
+
+ UPDATE vpx_job_log
+ SET status = 'WAITING'
+ WHERE job_id = v_job_id;
+
+ COMMIT;
+
+END rule_topn3_proc;
+
+/
+
+create or replace
+PROCEDURE rule_topn4_proc
+
+-----------------------------------------------------------------------------
+-- Procedure : rule_topn4_proc
+-- Description : This procedure controls processing and retention of yearly
+-- Top N Ranking values.
+-- Should be run from job.
+-- Parameters : no
+-----------------------------------------------------------------------------
+
+ as
+ 
+ v_start TIMESTAMP(3);
+ v_cnt_1 NUMBER(10,0);
+ v_cnt_2 NUMBER(10,0);
+ v_level varchar2(50);
+ v_err CHAR(1) := 'N';
+ v_errmsg VARCHAR2(1000);
+
+ v_status VARCHAR2(10);
+ v_recovery_period NUMBER(10,0);
+ v_last_run TIMESTAMP(3);
+ v_last_stat TIMESTAMP(3);
+ v_job_id NUMBER(10,0);
+ v_log_rtn NUMBER(10,0);
+ v_time_level NUMBER(3,0);
+
+
+BEGIN
+
+ v_job_id := 4;
+ v_time_level := 4;
+ v_recovery_period := 4320; --MINUTES(24*60*3=4320)
+
+ -- Step 1. Check whether the same job is currently runing
+ select status into v_status
+ from vpx_job_log
+ where job_id = v_job_id;
+
+ -- If yes - do nothing
+ IF v_status = 'RUNNING' then
+ RETURN;
+ end if;
+
+ -- Get the last_processed_date,meaning when was the job last run
+ SELECT MAX(SAMPLE_TIME) into v_last_run
+ FROM VPX_TOPN_STATE
+ WHERE TIME_LEVEL = v_time_level;
+
+ --Get the lastest_time, data that is not processed yet
+ begin
+ select max(sample_time) - numtodsinterval(v_recovery_period,'minute') into v_last_stat
+ from vpx_sample_time4;
+ exception
+ when no_data_found then
+
+ UPDATE vpx_job_log
+ SET status = 'WAITING'
+ WHERE job_id = v_job_id;
+
+ return;
+ end;
+
+ -- Check what to log for calc topn procedure execution from VPX_PARAMETER
+ -- should be one of:
+ -- 'OFF' - nothing
+ -- 'ERR' - errors
+ -- 'INF' - performance + errors
+ -- 'CHK' - addittional checks + performance + errors
+
+ select SUBSTR(value,1,3) into v_level
+ from vpx_parameter
+ where name = 'DBProc.Log.Level.Topn.Calc4';
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := COALESCE(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ if v_level in('INF','CHK') then
+ --select count(1) into v_cnt_1 from VPX_TOPN_PAST_YEAR;
+ select num_rows into v_cnt_1 from user_tables where table_name = 'VPX_TOPN_PAST_YEAR';
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ -- when v_last_run is null, set v_last_run =(v_last_stat -v_recovery_period) -(happens @ VC initial start)
+ v_last_run := NVL(v_last_run, (v_last_stat - numtodsinterval(v_recovery_period,'minute')));
+
+
+ 
+ IF (v_last_run <= (v_last_stat - numtodsinterval(v_recovery_period,'minute'))) then
+ v_last_run := (v_last_stat - numtodsinterval(v_recovery_period,'minute'));
+ END IF;
+ --DBMS_OUTPUT.PUT_LINE('last_processed_date: ' || v_last_run);
+ --DBMS_OUTPUT.PUT_LINE('last_stat_date: ' || v_last_stat);
+
+ --If not in RUNNING state, set the job status to running now
+ UPDATE vpx_job_log
+ SET status = 'RUNNING'
+ WHERE job_id = v_job_id;
+
+ BEGIN
+ calc_topn1_proc(v_last_run,v_last_stat);
+ EXCEPTION
+ WHEN OTHERS THEN
+ v_err := 'Y';
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- Mark job as waiting
+ UPDATE vpx_job_log
+ SET status = 'WAITING',last_run = COALESCE(v_last_stat,v_last_run)
+ WHERE job_id = v_job_id;
+
+ -- According to the logging level log basic execution info
+ IF v_level in('INF','CHK') then
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('CALC_TOPN4_PROC',
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ v_err,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_err
+ when 'N' then v_level
+ else v_errmsg
+ end);
+ end if;
+
+ -- If looging level is higher then errors only update the log record
+ -- with additional info appropriately
+ IF v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_2 from VPX_TOPN_PAST_YEAR;
+ select num_rows into v_cnt_2 from user_tables where table_name = 'VPX_TOPN_PAST_YEAR';
+
+ update vpx_proc_log
+ set tgt_rows = coalesce(v_cnt_2 -v_cnt_1,0)
+ where proc_name = 'CALC_TOPN4_PROC'
+ and start_dt = v_start;
+ end if;
+
+ v_err := 'N';
+ -- Step 5. Clear expired daily integrals
+ -- Check what to log for clear topn procedure execution from VPX_PARAMETER
+
+ select SUBSTR(value,1,3) INTO v_level
+ from vpx_parameter
+ WHERE (name = 'DBProc.Log.Level.Topn.Purge4');
+
+ -- If the parameter is not set then accept 'ERR' as default
+ v_level := coalesce(v_level,'ERR');
+
+ -- Prepare some countings for 'INF' and 'CHK' levels
+ if v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_1 from VPX_TOPN_PAST_YEAR;
+ select num_rows into v_cnt_1 from user_tables where table_name = 'VPX_TOPN_PAST_YEAR';
+ end if;
+
+ -- Execute procedure geting exceptions here
+ v_start := SYS_EXTRACT_UTC(SYSTIMESTAMP);
+
+ BEGIN
+ clear_topn4_proc();
+ EXCEPTION
+ WHEN OTHERS THEN
+ v_err := 'Y';
+ v_errmsg := 'Error: '||SQLERRM||replace(replace(dbms_utility.format_error_backtrace(),chr(10),''),'ORA-06512:','');
+ END;
+
+ -- According to the logging level log basic execution info
+ IF (v_level in('INF','CHK')) OR (v_level = 'ERR') then
+ insert into vpx_proc_log(proc_name,
+ start_dt,
+ end_dt,
+ err_flag,
+ chk_flag,
+ description)
+ values('CLEAR_TOPN4_PROC',
+ v_start,
+ SYS_EXTRACT_UTC(SYSTIMESTAMP),
+ v_err,
+ case v_level
+ when 'CHK' then 'Y'
+ else 'N'
+ end,
+ case v_err
+ when 'N' then v_level
+ else v_errmsg
+ end);
+ end if;
+
+ -- If looging level is higher then errors only update the log record
+ -- with additional info appropriately
+ IF v_level in('INF','CHK') then
+ --select count(1) INTO v_cnt_2 from VPX_TOPN_PAST_YEAR;
+ select num_rows into v_cnt_2 from user_tables where table_name = 'VPX_TOPN_PAST_YEAR';
+
+ update vpx_proc_log
+ set src_rows = coalesce(v_cnt_1 -v_cnt_2,0)
+ where proc_name = 'CLEAR_TOPN4_PROC'
+ and start_dt = v_start;
+ end if;
+
+ COMMIT;
+
+EXCEPTION
+ WHEN OTHERS THEN
+
+ UPDATE vpx_job_log
+ SET status = 'WAITING'
+ WHERE job_id = v_job_id;
+ COMMIT;
+
+END rule_topn4_proc;
+
+
+/
+
+declare varjobid int;
+	v_job_number number(10);
+TYPE cur_type IS REF CURSOR;
+
+objectcursor cur_type; 
+
+Begin
+
+open objectcursor for 
+select job 
+from user_jobs
+where what like '%stats_rollup1_proc;%';
+
+Loop
+	fetch objectcursor into varjobid;
+	exit when objectcursor%NOTFOUND;
+	dbms_job.remove (job => varjobid);
+
+End Loop;
+
+Close objectcursor;
+
+begin
+
+dbms_job.submit(
+	job => v_job_number,
+   what=> 'begin l_stats_rollup1_proc; end;',
+   next_date=>trunc(sysdate,'HH')+1/24, 
+   interval=>'sysdate+1/48');
+   commit;
+end  ;
+
+end;
+
+/
+
+
+declare varjobid int;
+		v_job_number number(10);
+TYPE cur_type IS REF CURSOR;
+
+objectcursor cur_type; 
+
+Begin
+
+open objectcursor for 
+select job 
+from user_jobs
+where what like '%stats_rollup2_proc;%';
+
+Loop
+	fetch objectcursor into varjobid;
+	exit when objectcursor%NOTFOUND;
+	dbms_job.remove (job => varjobid);
+
+End Loop;
+
+Close objectcursor;
+
+open objectcursor for 
+select job 
+from user_jobs
+where what = 'begin l_stats_rollup2_proc; l_Purge_Stat2_proc; purge_usage_stat_proc; end;';
+
+Loop
+	fetch objectcursor into varjobid;
+	exit when objectcursor%NOTFOUND;
+	dbms_job.remove (job => varjobid);
+
+End Loop;
+
+Close objectcursor;
+
+begin
+
+dbms_job.submit(
+	job => v_job_number,
+   what=>'begin l_stats_rollup2_proc; l_Purge_Stat2_proc; purge_usage_stat_proc; end;',
+   next_date=>trunc(sysdate,'HH') + mod(cast(to_char(sysdate, 'HH') as int), 2)/24 + 1/24 + 1/96, 
+   interval=>'sysdate+1/12');
+   commit;
+end  ;
+
+end;
+
+/
+
+declare varjobid int;
+		v_job_number number(10);
+TYPE cur_type IS REF CURSOR;
+
+objectcursor cur_type; 
+
+Begin
+
+open objectcursor for 
+select job 
+from user_jobs
+where what like '%stats_rollup3_proc;%';
+
+Loop
+	fetch objectcursor into varjobid;
+	exit when objectcursor%NOTFOUND;
+	dbms_job.remove (job => varjobid);
+
+End Loop;
+
+Close objectcursor;
+
+begin
+
+dbms_job.submit(
+	job => v_job_number,
+   what=>'begin l_stats_rollup3_proc; l_purge_stat3_proc; end;',
+   next_date=>trunc(sysdate,'DDD') + case when cast(to_char(sysdate, 'HH24') as int) > 1 then 1 else 0 end + 1/12 + 1/96,
+   interval=>'sysdate+1');
+   commit;
+end  ;
+
+end;
+
+/
+
+DECLARE
+   v_jobid int;
+   v_job_number number(10);
+   TYPE cur_type IS REF CURSOR;
+   objectcursor cur_type;
+   v_cnt pls_integer;
+BEGIN
+
+   OPEN objectcursor FOR
+   SELECT job
+     FROM user_jobs
+    WHERE what = 'rule_topn1_proc;';
+
+   LOOP
+      FETCH objectcursor INTO v_jobid;
+      EXIT when objectcursor%NOTFOUND;
+      dbms_job.remove (job => v_jobid);
+   END LOOP;
+
+   CLOSE objectcursor;
+
+   SELECT COUNT(*) INTO v_cnt
+     FROM vpx_job_log WHERE job_id = 1;
+
+   IF v_cnt = 0 THEN
+      INSERT INTO VPX_JOB_LOG(JOB_ID) VALUES (1);
+   END IF;
+
+   BEGIN
+      dbms_job.submit(
+        job => v_job_number,
+        what=> 'rule_topn1_proc;',
+        next_date=>sysdate  + 1/24 + 1/(24*4),
+        interval=>'sysdate + 1/(24*6)');
+      COMMIT;
+   END;
+
+END;
+
+/
+
+DECLARE
+   v_jobid int;
+   v_job_number number(10);
+   TYPE cur_type IS REF CURSOR;
+   objectcursor cur_type;
+   v_cnt pls_integer;
+BEGIN
+
+   SELECT COUNT(*) INTO v_cnt
+     FROM vpx_job_log WHERE job_id = 2;
+
+   IF v_cnt = 0 THEN
+      INSERT INTO VPX_JOB_LOG(JOB_ID) VALUES (2);
+   END IF;
+
+   OPEN objectcursor FOR
+   SELECT job
+     FROM user_jobs
+    WHERE what = 'rule_topn2_proc;';
+
+   LOOP
+      FETCH objectcursor INTO v_jobid;
+      EXIT when objectcursor%NOTFOUND;
+      dbms_job.remove (job => v_jobid);
+   END LOOP;
+
+   CLOSE objectcursor;
+
+   BEGIN
+      dbms_job.submit(
+        job => v_job_number,
+        what=> 'rule_topn2_proc;',
+        next_date=>sysdate  + 1/24 + 3/(24*4),
+        interval=>'sysdate + 1/(24*2)');
+      COMMIT;
+   END;
+
+END;
+
+/
+
+DECLARE
+   v_jobid int;
+   v_job_number number(10);
+   TYPE cur_type IS REF CURSOR;
+   objectcursor cur_type;
+   v_cnt pls_integer;
+BEGIN
+
+   OPEN objectcursor FOR
+   SELECT job
+     FROM user_jobs
+    WHERE what = 'rule_topn3_proc;';
+
+   LOOP
+      FETCH objectcursor INTO v_jobid;
+      EXIT when objectcursor%NOTFOUND;
+      dbms_job.remove (job => v_jobid);
+   END LOOP;
+
+   CLOSE objectcursor;
+
+   SELECT COUNT(*) INTO v_cnt
+     FROM vpx_job_log WHERE job_id = 3;
+
+   IF v_cnt = 0 THEN
+      INSERT INTO VPX_JOB_LOG(JOB_ID) VALUES (3);
+   END IF;
+
+   BEGIN
+      dbms_job.submit(
+        job => v_job_number,
+        what=> 'rule_topn3_proc;',
+        next_date=>sysdate  + 1/24 + 7/(24*12),
+        interval=>'sysdate + 1/12');
+      COMMIT;
+   END;
+
+END;
+
+/
+
+DECLARE
+   v_jobid int;
+   v_job_number number(10);
+   TYPE cur_type IS REF CURSOR;
+   objectcursor cur_type;
+   v_cnt pls_integer;
+BEGIN
+
+   SELECT COUNT(*) INTO v_cnt
+     FROM vpx_job_log WHERE job_id = 4;
+
+   IF v_cnt = 0 THEN
+      INSERT INTO VPX_JOB_LOG(JOB_ID) VALUES (4);
+   END IF;
+
+   OPEN objectcursor FOR
+   SELECT job
+     FROM user_jobs
+    WHERE what = 'rule_topn4_proc;';
+
+   LOOP
+      FETCH objectcursor INTO v_jobid;
+      EXIT when objectcursor%NOTFOUND;
+      dbms_job.remove (job => v_jobid);
+   END LOOP;
+
+   CLOSE objectcursor;
+
+   BEGIN
+      dbms_job.submit(
+        job => v_job_number,
+        what=> 'rule_topn4_proc;',
+        next_date=>sysdate  + 1/24 + 11/(24*12),
+        interval=>'sysdate + 1/1');
+      COMMIT;
+   END;
+
+END;
+
+/
+
+
+
+
+

@@ -1,0 +1,58 @@
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% HEADER DATA
+% USR_VERSION: 1
+% USR_TYPE   : HF
+% USR_GAINTXT: LO
+% USR_GAINNOM: 5E-1
+% USR_CDATE  : 04-Mar-2009 17:23:05
+% USR_LOGSN  : S062 
+% USR_PRESN  : S006 
+% USR_COISN  : BFC255 
+% USR_PHYSCH : H2 
+% USR_CCONV  : 3.9736E-7 V/c
+% USR_UNITS  : GAIN = Volt/nanoTesla PHASE = Degrees
+% ENG_DATE   : 05-Mar-2009 09:08:18
+% ENG_SWEEP  : D:\EM\work\sweep_SIO_10Hz_3300s_5hr.txt
+% ENG_DATA   : F:\olsvolldata\S062-H2-255.bin
+% ENG_RSP    : S062_H2_S006_BFC255_20090304_1657.rsp
+% ENG_START  : 04-Mar-2009 17:23:05 (sample #95419)
+% ENG_SITE   : FI
+% ENG_TYPE   : SIO: HF
+% ENG_ADJC   : COUNTCONVERSION: 3.42/2^23   = 4.0770E-7 Volt/count
+% ENG_ADJR   : 4e2*pi*359.4/800.0 *1.0143 = 572.617182 nT/V
+% ENG_NCOIL  : 359.4
+% ENG_RSER   :  800.0
+% ENG_PCNAME : FJO-5451PC
+% ENG_SRATE  :  62.5000
+% ENG_FIRMW  : 1.17
+% ENG_LOGCH  : 6
+% ENG_REFCH  : 2
+% ENG_TEMP   : 6.2;5.9
+% ENG_COMM   : 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% CALIBRATION DATA: FREQ (HZ)  GAIN (V/nT)  PHASE (DEG)
+          10     0.256326   -23.47 
+         6.4     0.266449   -15.68 
+           4     0.276405    -9.46 
+         2.5     0.284912    -3.75 
+         1.6     0.289202     2.08 
+           1     0.287644     9.16 
+        0.64     0.278312    17.47 
+         0.4     0.256201    28.57 
+        0.25      0.21719    41.89 
+        0.16     0.168376    54.76 
+         0.1     0.117432    66.29 
+       0.064    0.0788988    74.32 
+        0.04    0.0504628    80.00 
+       0.025     0.031866    83.70 
+       0.016    0.0205001    85.93 
+        0.01    0.0128558    87.38 
+      0.0064   0.00825599    88.21 
+       0.004   0.00518095    88.80 
+      0.0025   0.00324992    89.13 
+      0.0016   0.00208043    89.37 
+       0.001   0.00130073    89.51 
+      0.0003  0.000391331    90.34 
+%
+%
+%
